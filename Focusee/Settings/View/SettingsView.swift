@@ -21,7 +21,9 @@ extension SettingsView {
     func renderSettingsContent() -> some View {
         VStack {
             HStack {
-                ButtonAction(action: goBack, iconSystemName: "chevron.left",iconSize: 35)
+                ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {
+                    goBack()
+                }
                 
                 Spacer()
                 Text("Settings")
@@ -34,7 +36,7 @@ extension SettingsView {
             VStack {
                 
                 ForEach(SettingsOptions.allCases,id:\.self) { option in
-                    renderSettingsOption(title: option.title, time: option.value, timeLabel: option.label)
+                    renderSettingsOption(option:option)
                 }
                 
             }
@@ -48,16 +50,16 @@ extension SettingsView {
 
 extension SettingsView {
     
-    func renderSettingsOption(title:String,time:String,timeLabel:String) -> some View {
-        Button(action:{viewModel.changeUIState(to: .changeOption)}) {
+    func renderSettingsOption(option:SettingsOptions) -> some View {
+        Button(action:{viewModel.redirectToChangeSettingsOption(option)}) {
             HStack {
-                Text(title)
+                Text(option.title)
                 Spacer()
                 HStack(alignment: .center) {
-                    Text(time)
+                    Text(option.value)
                         .fontWeight(.medium)
                         .font(.title2)
-                    Text(timeLabel)
+                    Text(option.label)
                         .foregroundStyle(Color(.darkGray))
                     Button(action:{}) {
                         Image(systemName:"chevron.right")

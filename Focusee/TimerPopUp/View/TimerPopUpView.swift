@@ -39,10 +39,10 @@ extension TimerPopUpView {
                 }.buttonStyle(.plain)
                     .padding(.bottom,10)
                 Spacer()
-                ButtonAction(action: {
+                ButtonAction( iconSystemName: "gear") {
                     viewModel.pause()
                     viewModel.changeRenderUiState(to: .settings)
-                }, iconSystemName: "gear")
+                }
             }
             
             
