@@ -19,3 +19,8 @@ enum TimerUIState {
     case running
     case paused
 }
+
+enum TimerRenderUIState {
+    case timerPopUp
+    case settings
+}

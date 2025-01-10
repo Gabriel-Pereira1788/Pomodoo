@@ -4,6 +4,7 @@ import Foundation
 class TimerPopUpViewModel:ObservableObject {
     @Published var countSession = 0
     @Published var uiState:TimerUIState = .paused
+    @Published var renderUiState:TimerRenderUIState = .timerPopUp
     @Published var timerBreak:TimerBreak = .none
     @Published var timeElapsed: TimeInterval = TimerBreak.none.timeInterval
     
@@ -33,6 +34,20 @@ class TimerPopUpViewModel:ObservableObject {
         timer = nil
     }
     
+    func changeRenderUiState(to state:TimerRenderUIState) {
+        renderUiState = state
+    }
+}
+
+extension TimerPopUpViewModel {
+    func renderSettingsView() -> some View  {
+        return SettingsView(goBack:{
+            self.changeRenderUiState(to: .timerPopUp)
+        },viewModel: SettingsViewModel())
+    }
+}
+
+extension TimerPopUpViewModel {
     private func finishCurrentSession() {
         reset()
         
@@ -51,7 +66,7 @@ class TimerPopUpViewModel:ObservableObject {
         
     }
     
-    func reset() {
+    private func reset() {
         uiState = .paused
         timer?.invalidate()
         timer = nil
@@ -64,3 +79,5 @@ class TimerPopUpViewModel:ObservableObject {
         timeElapsed = breakType.timeInterval
     }
 }
+
+
