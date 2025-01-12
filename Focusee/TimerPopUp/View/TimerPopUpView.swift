@@ -30,7 +30,7 @@ extension TimerPopUpView {
                 Button(action:{
                     viewModel.uiState == .running ? viewModel.pause(): viewModel.start()
                 }) {
-                    Text(viewModel.uiState == .running ? "Pause" : "Start")
+                    Text(viewModel.uiState == .paused ? "Start" : "Pause")
                         .padding(.vertical,10)
                         .padding(.horizontal,35)
                         .foregroundColor(.white)
@@ -56,7 +56,7 @@ extension TimerPopUpView {
     
     func renderTimer() -> some View {
         VStack(alignment:.center,spacing:6) {
-            Image(systemName: viewModel.uiState == .running ? "eye" : "cup.and.heat.waves")
+            Image(systemName: viewModel.uiState == .breakTime ? "cup.and.heat.waves" : "eye")
                 .font(.system(size: 20))
             
             Text(viewModel.timeString)
@@ -65,7 +65,7 @@ extension TimerPopUpView {
             
             renderSessionsCount()
             
-            Text("FOCUS")
+            Text(viewModel.timerBreak.description)
                 .foregroundStyle(Color(.darkGray))
                 .font(.caption2)
                 .padding(.top,10)
@@ -85,11 +85,11 @@ extension TimerPopUpView {
     func renderSessionsCount() -> some View {
         HStack(spacing:10) {
             
-            ForEach(0..<4, content: {index in
+            ForEach(0..<viewModel.sessionsLimit, id:\.self) {index in
                 Rectangle().frame(width: 3,height: 7)
                     .foregroundColor( viewModel.countSession > index ? .orange : Color(.darkGray))
                     .cornerRadius(10)
-            })
+            }
         }
     }
 }

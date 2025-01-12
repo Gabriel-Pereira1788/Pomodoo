@@ -3,7 +3,8 @@ import Foundation
 
 struct SettingsView: View {
     var goBack: () -> Void
-    @ObservedObject var viewModel:SettingsViewModel
+    @StateObject var viewModel:SettingsViewModel
+    
     var body: some View {
         ZStack {
             switch viewModel.uiState {
@@ -35,10 +36,10 @@ extension SettingsView {
             
             VStack {
                 
-                ForEach(SettingsOptions.allCases,id:\.self) { option in
-                    renderSettingsOption(option:option)
-                }
-                
+                renderSettingsOption(option: .focus(viewModel.timerDataStore.focusValue))
+                renderSettingsOption(option: .longBreak(viewModel.timerDataStore.longBreakValue))
+                renderSettingsOption(option: .shortBreak(viewModel.timerDataStore.shortBreakValue))
+                renderSettingsOption(option: .sessions(viewModel.timerDataStore.sessionsLimitValue))
             }
             Spacer()
         }.frame(maxWidth: 260,maxHeight: 200)
@@ -50,7 +51,7 @@ extension SettingsView {
 
 extension SettingsView {
     
-    func renderSettingsOption(option:SettingsOptions) -> some View {
+    func renderSettingsOption(option:TimerConfig) -> some View {
         Button(action:{viewModel.redirectToChangeSettingsOption(option)}) {
             HStack {
                 Text(option.title)
@@ -73,6 +74,36 @@ extension SettingsView {
                 .padding(.vertical,3)
         }.buttonStyle(.plain)
         
+    }
+}
+
+struct SettingsOptionView:View {
+    var action:()->Void
+    var title:String
+    var value:String
+    var label:String
+    var body: some View {
+        Button(action:action) {
+            HStack {
+                Text(title)
+                Spacer()
+                HStack(alignment: .center) {
+                    Text(value)
+                        .fontWeight(.medium)
+                        .font(.title2)
+                    Text(label)
+                        .foregroundStyle(Color(.darkGray))
+                    Button(action:{}) {
+                        Image(systemName:"chevron.right")
+                            .font(.system(size: 20))
+                            .foregroundStyle(Color(.darkGray))
+                    }
+                    .buttonStyle(.plain)
+                }
+                
+            }.frame(maxWidth: .infinity)
+                .padding(.vertical,3)
+        }.buttonStyle(.plain)
     }
 }
 

@@ -1,10 +1,3 @@
-//
-//  ChangeSettingsOptionView.swift
-//  Focusee
-//
-//  Created by Gabriel Pereira on 09/01/25.
-//
-
 import SwiftUI
 
 struct ChangeSettingsOptionView: View {
@@ -15,7 +8,8 @@ struct ChangeSettingsOptionView: View {
         VStack(spacing:20) {
             HStack(alignment: .lastTextBaseline) {
                 ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {
-                    goBack()
+                    viewModel.changeTimerConfig(value: viewModel.value)
+                    goBack()   
                 }
                 
                 Spacer()
@@ -26,7 +20,7 @@ struct ChangeSettingsOptionView: View {
             
             HStack(spacing:20) {
                 
-                Button(action:{}){
+                Button(action:viewModel.decressValue){
                     VStack {
                         Image(systemName:"minus")
                             .font(.system(size: 14))
@@ -36,11 +30,11 @@ struct ChangeSettingsOptionView: View {
                 }.buttonStyle(.plain)
                 
                 
-                Text(viewModel.option.value)
+                Text("\(viewModel.value)")
                     .font(.title)
                     .fontWeight(.medium)
                 
-                Button(action:{}){
+                Button(action:viewModel.incressValue){
                     VStack {
                         Image(systemName:"plus")
                             .font(.system(size: 14))
@@ -76,5 +70,5 @@ struct ButtonStyle: ViewModifier {
     
     ChangeSettingsOptionView(goBack:{
         
-    },viewModel: ChangeSettingsOptionViewModel(option: .long))
+    },viewModel: ChangeSettingsOptionViewModel(option: .longBreak(15)))
 }
