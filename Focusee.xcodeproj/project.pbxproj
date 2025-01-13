@@ -6,8 +6,23 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9BB813BD2D343B6400F55000 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9B33EC382D2DFD4E00439338 /* Focusee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Focusee.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BB813A72D343B6300F55000 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		9BB813A92D343B6300F55000 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				9B33EC3A2D2DFD4E00439338 /* Focusee */,
+				9BB813A62D343B6300F55000 /* Frameworks */,
 				9B33EC392D2DFD4E00439338 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,6 +61,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9BB813A62D343B6300F55000 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9BB813A72D343B6300F55000 /* WidgetKit.framework */,
+				9BB813A92D343B6300F55000 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -55,6 +80,7 @@
 				9B33EC342D2DFD4E00439338 /* Sources */,
 				9B33EC352D2DFD4E00439338 /* Frameworks */,
 				9B33EC362D2DFD4E00439338 /* Resources */,
+				9BB813BD2D343B6400F55000 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);

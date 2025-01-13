@@ -18,6 +18,7 @@ class TimerPopUpViewModel:ObservableObject, TimerConfigObserver{
     
     private var timer: Timer?
     
+    
     init() {
         TimerConfigNotifier.instance.addObserver(self)
         bundleIntervalValues()
@@ -39,6 +40,7 @@ class TimerPopUpViewModel:ObservableObject, TimerConfigObserver{
     }
     
     func start() {
+        
         guard uiState == .paused else { return }
         
         uiState = .running
@@ -95,6 +97,7 @@ extension TimerPopUpViewModel {
         
         print("COUNT SESSION: \(countSession) SESSIONS LIMIT: \(sessionsLimit)")
         if(countSession >= sessionsLimit) {
+            FocuseeNotificationCenter.shared.scheduleNotification(title: "Long Break", body: "Long Break Body", timeInterval: .zero)
             uiState = .breakTime
             changeTimerBreakElapsed(.long)
             countSession = 0
@@ -102,10 +105,12 @@ extension TimerPopUpViewModel {
         }
         
         if(timerBreak != .short) {
+            FocuseeNotificationCenter.shared.scheduleNotification(title: "Short Break", body: "Short Break Body", timeInterval: .zero)
             uiState = .breakTime
             countSession += 1
             changeTimerBreakElapsed(.short)
         } else {
+            FocuseeNotificationCenter.shared.scheduleNotification(title: "Focus Now", body: "Focus Now Body", timeInterval: .zero)
             reset()
             changeTimerBreakElapsed(.focus)
         }

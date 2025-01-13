@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TimerPopUpView: View {
+    
     var redirectToSettingsView: () -> Void
     @ObservedObject var viewModel:TimerPopUpViewModel
     
