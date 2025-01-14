@@ -23,7 +23,7 @@ extension TimerPopUpView {
         VStack(alignment: .center,spacing: 15) {
             ZStack {
                 renderTimer()
-                renderTimerCircle()
+                CircularProgressView(progress: viewModel.progress)
             }
             
             HStack{
@@ -71,16 +71,6 @@ extension TimerPopUpView {
                 .font(.caption2)
                 .padding(.top,10)
         }
-    }
-    
-    func renderTimerCircle() -> some View {
-        Circle()
-            .stroke(lineWidth: 7)
-            .fill(Color(.darkGray))
-            .frame(width: 200, height: 200)
-            .onReceive(viewModel.$timeElapsed) {time in
-                print(time)
-            }
     }
     
     func renderSessionsCount() -> some View {

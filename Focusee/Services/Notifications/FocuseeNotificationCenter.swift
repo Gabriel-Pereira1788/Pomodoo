@@ -12,7 +12,6 @@ class FocuseeNotificationCenter {
     private var permissionGranted = false
     
     private init() {
-        checkNotificationPermission()
     }
     
     func requestNotificationPermissions() {
@@ -29,9 +28,11 @@ class FocuseeNotificationCenter {
     
     
     func checkNotificationPermission() {
+        
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
             DispatchQueue.main.async {
                 let permission = settings.authorizationStatus == .authorized
+                
                 if(!permission) {
                     self?.requestNotificationPermissions()
                 }
@@ -51,7 +52,7 @@ class FocuseeNotificationCenter {
         content.body = body
         content.sound = .default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in

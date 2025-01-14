@@ -9,6 +9,7 @@ class TimerPopUpViewModel:ObservableObject, TimerConfigObserver{
     @Published var timerBreak:TimerBreak = .focus
     
     @Published var timeElapsed: TimeInterval = 25 * 60
+    
     @ObservedObject var timerDataStore = TimerDataStore.shared
     
     var shortBreakInterval:TimeInterval = 5 * 60
@@ -19,16 +20,22 @@ class TimerPopUpViewModel:ObservableObject, TimerConfigObserver{
     private var timer: Timer?
     
     
-    init() {
-        TimerConfigNotifier.instance.addObserver(self)
-        bundleIntervalValues()
-        
-    }
+    var initialTime:Double = 0.0
     
+    var progress:Double {
+        guard initialTime > 0 else { return 0.0 }
+        return  1.0 - (timeElapsed / initialTime)
+    }
     var timeString: String {
         let minutes = Int(timeElapsed) / 60
         let seconds = Int(timeElapsed) % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    init() {
+        FocuseeNotificationCenter.shared.checkNotificationPermission()
+        TimerConfigNotifier.instance.addObserver(self)
+        bundleIntervalValues()
     }
     
     func bundleIntervalValues() {
@@ -39,13 +46,23 @@ class TimerPopUpViewModel:ObservableObject, TimerConfigObserver{
         timeElapsed = focusBreakInterval
     }
     
+    func onMainButtonPress() {
+        //TODO: Implements a toggle to start and puase and block somethings based on timer state
+    }
+    
     func start() {
         
         guard uiState == .paused else { return }
         
+        if initialTime == 0 {
+            initialTime = timeElapsed
+        }
+        
+        
         uiState = .running
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.timeElapsed -= 1
+            
             if(self?.timeElapsed == 0) {
                 self?.finishCurrentSession()
             }
@@ -94,10 +111,10 @@ extension TimerPopUpViewModel {
 
 extension TimerPopUpViewModel {
     private func finishCurrentSession() {
-        
-        print("COUNT SESSION: \(countSession) SESSIONS LIMIT: \(sessionsLimit)")
         if(countSession >= sessionsLimit) {
-            FocuseeNotificationCenter.shared.scheduleNotification(title: "Long Break", body: "Long Break Body", timeInterval: .zero)
+            scheduleNotification(title: "🎉 Time to Recharge", body: "You’ve completed several cycles—amazing work! Recharge with a longer pause before the next session.")
+            
+            
             uiState = .breakTime
             changeTimerBreakElapsed(.long)
             countSession = 0
@@ -105,15 +122,21 @@ extension TimerPopUpViewModel {
         }
         
         if(timerBreak != .short) {
-            FocuseeNotificationCenter.shared.scheduleNotification(title: "Short Break", body: "Short Break Body", timeInterval: .zero)
+            scheduleNotification(title: "☕ Time for a Quick Break", body: "Take a breather—you’ve earned it! Stretch, grab some water, or just relax for a bit.")
+            
             uiState = .breakTime
             countSession += 1
             changeTimerBreakElapsed(.short)
         } else {
-            FocuseeNotificationCenter.shared.scheduleNotification(title: "Focus Now", body: "Focus Now Body", timeInterval: .zero)
+            scheduleNotification(title: "🔔 Back to Work!", body: "Eliminate distractions and dive into deep work. Stay on track—your break is just around the corner!")
+            
             reset()
             changeTimerBreakElapsed(.focus)
         }
+    }
+    
+    private func scheduleNotification(title:String,body:String) {
+        FocuseeNotificationCenter.shared.scheduleNotification(title: title, body:body, timeInterval: 0.1)
     }
     
     
@@ -123,7 +146,6 @@ extension TimerPopUpViewModel {
         timer?.invalidate()
         timer = nil
         changeTimerBreakElapsed(.focus)
-        
     }
     
     private func changeTimerBreakElapsed(_ breakType: TimerBreak) {
@@ -139,6 +161,7 @@ extension TimerPopUpViewModel {
             break
         }
         timerBreak = breakType
+        initialTime = timeElapsed
         
     }
 }
