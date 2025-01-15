@@ -31,7 +31,7 @@ class TimerDataStore:ObservableObject,TimerConfigObserver {
     @AppStorage("sessions-limit-value") var sessionsLimitValue = 4
     
     func didChangeTimerConfig(_ data: TimerConfig) {
-        print("SETTINGS-VIEW: \(data)")
+        
         switch data {
         case .shortBreak(let value):
             shortBreakValue = value

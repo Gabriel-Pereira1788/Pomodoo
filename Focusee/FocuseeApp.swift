@@ -1,10 +1,4 @@
-//
-//  FocuseeApp.swift
-//  Focusee
-//
-//  Created by Gabriel Pereira on 07/01/25.
-//
-
+import Combine
 import SwiftUI
 
 @main
@@ -23,18 +17,69 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusBarItem: NSStatusItem?
     var popover: NSPopover?
     
+    private var cancellables = Set<AnyCancellable>()
+    @ObservedObject var timerPopUpViewModel = TimerPopUpViewModel()
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
-        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusBarItem?.button {
-            button.image = NSImage(systemSymbolName: "star.fill", accessibilityDescription: "Menu Widget")
-            button.action = #selector(togglePopover(_:))
+            button.image = NSImage(
+                systemSymbolName: "clock", accessibilityDescription: "Menu Timer")
+            button.imagePosition = .imageRight
+            
+            button.action = #selector(statusBarButtonClicked(_:))
+            button.sendAction(on: [.rightMouseUp,.leftMouseUp])
+            
+            
         }
         
+        timerPopUpViewModel.$timerBreak.sink { [weak self] value in
+            self?.statusBarItem?.button?.image = NSImage(
+                systemSymbolName: value == .focus ? "clock" : "cup.and.heat.waves",
+                accessibilityDescription: "Menu Timer")
+        }.store(in: &cancellables)
+        
+        timerPopUpViewModel.$timeElapsed.sink { [weak self] value in
+            let minutes = Int(value) / 60
+            let seconds = Int(value) % 60
+            let value = String(format: "%02d:%02d", minutes, seconds)
+            self?.statusBarItem?.button?.title = value
+        }.store(in: &cancellables)
         
         popover = NSPopover()
-        popover?.contentViewController = NSHostingController(rootView: TimerPopUpView(redirectToSettingsView: navigateToScreen, viewModel: TimerPopUpViewModel()))
+        popover?.contentViewController = NSHostingController(
+            rootView: TimerPopUpView(
+                redirectToSettingsView: navigateToScreen, viewModel: timerPopUpViewModel))
         popover?.behavior = .transient
+    }
+    
+    @objc func statusBarButtonClicked(_ sender: Any?) {
+        let event = NSApp.currentEvent!
+        if event.type == NSEvent.EventType.rightMouseUp {
+            showCustomMenu()
+        } else {
+            togglePopover(sender)
+        }
+    }
+    
+    @objc func quitApplication() {
+        
+    }
+    
+  @objc  func showCustomMenu() {
+        let statusBarMenu = NSMenu(title: "Status Bar Menu")
+        
+        statusBarMenu.addItem(
+            withTitle: "Quit",
+            action: #selector(AppDelegate.quitApplication),
+            keyEquivalent: "")
+        
+        statusBarItem?.menu = statusBarMenu
+        
+        statusBarItem?.button?.performClick(nil)
+      
+       statusBarItem?.menu = nil
     }
     
     @objc func togglePopover(_ sender: Any?) {
@@ -42,7 +87,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if popover?.isShown == true {
                 popover?.performClose(sender)
             } else {
-                popover?.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+                let buttonBounds = button.bounds
+                
+                if let statusBarItem = statusBarItem {
+                    
+                    statusBarItem.length = 60
+                }
+                
+                let iconWidth = button.image?.size.width ?? 0
+                let iconX = buttonBounds.midX - iconWidth / 2
+                let iconRect = NSRect(
+                    x: iconX,
+                    y: 0,
+                    width: 20,
+                    height: buttonBounds.height
+                )
+                
+                popover?.show(relativeTo: iconRect, of: button, preferredEdge: .minY)
             }
         }
     }
@@ -51,20 +112,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
         
         let newWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width:260, height: 200),
+            contentRect: NSRect(x: 0, y: 0, width: 260, height: 200),
             styleMask: [.titled, .closable, .resizable],
             backing: .buffered,
             defer: false
         )
         newWindow.title = "Focusee Settings"
         newWindow.isReleasedWhenClosed = false
-        newWindow.contentView = NSHostingView(rootView: SettingsView(goBack:{},viewModel: SettingsViewModel()))
-        
+        newWindow.contentView = NSHostingView(
+            rootView: SettingsView(goBack: {}, viewModel: SettingsViewModel()))
         
         newWindow.makeKeyAndOrderFront(nil)
     }
     
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return false // Não encerra o app quando a janela principal é fechada
-    }
 }

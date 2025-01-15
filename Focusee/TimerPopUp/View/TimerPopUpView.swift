@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct TimerPopUpView: View {
-    
+
     var redirectToSettingsView: () -> Void
-    @ObservedObject var viewModel:TimerPopUpViewModel
-    
+    @ObservedObject var viewModel: TimerPopUpViewModel
+
     var body: some View {
         ZStack {
             switch viewModel.renderUiState {
@@ -14,71 +14,69 @@ struct TimerPopUpView: View {
                 viewModel.renderSettingsView()
             }
         }
-        
+
     }
 }
 
 extension TimerPopUpView {
     func renderTimerPopUpContent() -> some View {
-        VStack(alignment: .center,spacing: 15) {
+        VStack(alignment: .center, spacing: 15) {
             ZStack {
                 renderTimer()
+
                 CircularProgressView(progress: viewModel.progress)
             }
-            
-            HStack{
+
+            HStack {
                 Spacer(minLength: 85)
-                Button(action:{
-                    viewModel.uiState == .running ? viewModel.pause(): viewModel.start()
-                }) {
+                Button(action: viewModel.onMainButtonPress) {
                     Text(viewModel.uiState == .paused ? "Start" : "Pause")
-                        .padding(.vertical,10)
-                        .padding(.horizontal,35)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 35)
                         .foregroundColor(.white)
                         .background(Color(.darkGray))
                         .clipShape(.capsule)
                 }.buttonStyle(.plain)
-                    .padding(.bottom,10)
+                    .padding(.bottom, 10)
                 Spacer()
-                ButtonAction( iconSystemName: "gear") {
+                ButtonAction(iconSystemName: "gear") {
                     viewModel.pause()
                     viewModel.changeRenderUiState(to: .settings)
                 }
             }
-            
-            
+
         }
         .padding()
-        .frame(width: 300, height:300)
+        .frame(width: 300, height: 300)
     }
 }
 
 extension TimerPopUpView {
-    
+
     func renderTimer() -> some View {
-        VStack(alignment:.center,spacing:6) {
-            Image(systemName: viewModel.uiState == .breakTime ? "cup.and.heat.waves" : "eye")
+        VStack(alignment: .center, spacing: 6) {
+            Image(systemName: viewModel.timerBreak == .focus ? "eye" : "cup.and.heat.waves")
                 .font(.system(size: 20))
-            
+
             Text(viewModel.timeString)
                 .fontWeight(.medium)
                 .font(.system(size: 50))
-            
+
             renderSessionsCount()
-            
+
             Text(viewModel.timerBreak.description)
                 .foregroundStyle(Color(.darkGray))
                 .font(.caption2)
-                .padding(.top,10)
+                .padding(.top, 10)
         }
     }
-    
+
     func renderSessionsCount() -> some View {
-        HStack(spacing:10) {
-            
-            ForEach(0..<viewModel.sessionsLimit, id:\.self) {index in
-                Rectangle().frame(width: 3,height: 7)
-                    .foregroundColor( viewModel.countSession > index ? .orange : Color(.darkGray))
+        HStack(spacing: 10) {
+
+            ForEach(0..<viewModel.sessionsLimit, id: \.self) { index in
+                Rectangle().frame(width: 3, height: 7)
+                    .foregroundColor(viewModel.countSession > index ? .orange : Color(.darkGray))
                     .cornerRadius(10)
             }
         }
@@ -86,7 +84,8 @@ extension TimerPopUpView {
 }
 
 #Preview {
-    TimerPopUpView(redirectToSettingsView: {
-        
-    }, viewModel: TimerPopUpViewModel() )
+    TimerPopUpView(
+        redirectToSettingsView: {
+
+        }, viewModel: TimerPopUpViewModel())
 }

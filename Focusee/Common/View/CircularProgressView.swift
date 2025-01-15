@@ -4,7 +4,7 @@ struct CircularProgressView: View {
     let progress:Double
     
     private let gradient = AngularGradient(
-        gradient: Gradient(colors: [Color.orange,Color.orange,Color.orange, .white.opacity(0.0)]),
+        gradient: Gradient(colors: [Color(.primay),Color(.primay),Color(.secondary), .white.opacity(0.0)]),
         center: .center,
         startAngle: .degrees(355),
         endAngle: .degrees(0))
