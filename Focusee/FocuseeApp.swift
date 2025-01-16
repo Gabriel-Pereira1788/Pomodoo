@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var popover: NSPopover?
     
     private var cancellables = Set<AnyCancellable>()
-    @ObservedObject var timerPopUpViewModel = TimerPopUpViewModel()
+    @ObservedObject var timerPopUpViewModel = TimerPopUpViewModel(timerDataStore: TimerDataStore.shared)
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -50,7 +50,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover = NSPopover()
         popover?.contentViewController = NSHostingController(
             rootView: TimerPopUpView(
-                redirectToSettingsView: navigateToScreen, viewModel: timerPopUpViewModel))
+                redirectToSettingsView:{},
+                viewModel: timerPopUpViewModel))
         popover?.behavior = .transient
     }
     
@@ -63,11 +64,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @objc func quitApplication() {
-        
-    }
     
-  @objc  func showCustomMenu() {
+    
+    @objc  func showCustomMenu() {
         let statusBarMenu = NSMenu(title: "Status Bar Menu")
         
         statusBarMenu.addItem(
@@ -78,8 +77,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem?.menu = statusBarMenu
         
         statusBarItem?.button?.performClick(nil)
-      
-       statusBarItem?.menu = nil
+        
+        statusBarItem?.menu = nil
+    }
+    
+    @objc func quitApplication() {
+        NSApplication.shared.terminate(self)
     }
     
     @objc func togglePopover(_ sender: Any?) {
@@ -106,23 +109,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 popover?.show(relativeTo: iconRect, of: button, preferredEdge: .minY)
             }
         }
-    }
-    
-    func navigateToScreen() {
-        NSApp.activate(ignoringOtherApps: true)
-        
-        let newWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 260, height: 200),
-            styleMask: [.titled, .closable, .resizable],
-            backing: .buffered,
-            defer: false
-        )
-        newWindow.title = "Focusee Settings"
-        newWindow.isReleasedWhenClosed = false
-        newWindow.contentView = NSHostingView(
-            rootView: SettingsView(goBack: {}, viewModel: SettingsViewModel()))
-        
-        newWindow.makeKeyAndOrderFront(nil)
     }
     
 }

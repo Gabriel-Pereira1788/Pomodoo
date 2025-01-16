@@ -10,14 +10,12 @@ class ChangeSettingsOptionViewModel:ObservableObject {
     }
     
     func incressValue() {
-        print("INCRESS")
         value += 1
         changeTimerConfig(value: value)
     }
     
     func decressValue() {
-        print("DECRESS")
-        if(value > 0) {
+        if(value > 1) {
             value -= 1
             changeTimerConfig(value: value)
         }

@@ -74,7 +74,7 @@ extension TimerPopUpView {
     func renderSessionsCount() -> some View {
         HStack(spacing: 10) {
 
-            ForEach(0..<viewModel.sessionsLimit, id: \.self) { index in
+            ForEach(0..<viewModel.timerDataStore.sessionsLimitValue, id: \.self) { index in
                 Rectangle().frame(width: 3, height: 7)
                     .foregroundColor(viewModel.countSession > index ? .orange : Color(.darkGray))
                     .cornerRadius(10)
@@ -87,5 +87,5 @@ extension TimerPopUpView {
     TimerPopUpView(
         redirectToSettingsView: {
 
-        }, viewModel: TimerPopUpViewModel())
+        }, viewModel: TimerPopUpViewModel(timerDataStore: TimerDataStore.shared))
 }
