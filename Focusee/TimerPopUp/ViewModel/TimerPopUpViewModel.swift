@@ -6,21 +6,21 @@ class TimerPopUpViewModel: ObservableObject {
     @Published var renderUiState: TimerRenderUIState = .timerPopUp
     @Published var countSession = 0
     @Published var timerBreak: TimerBreak = .focus
-    @Published var timeElapsed: TimeInterval = 25 * 60
+    @Published var elapsedTime: TimeInterval = 25 * 60
     
     @ObservedObject var timerDataStore: TimerDataStore
     
     private var timer: Timer?
-    var initialTime: Double = 0.0
+    private var initialTime: Double = 0.0
     
     var progress: Double {
         guard initialTime > 0 else { return 0.0 }
-        return 1.0 - (timeElapsed / initialTime)
+        return 1.0 - (elapsedTime / initialTime)
     }
     
     var timeString: String {
-        let minutes = Int(timeElapsed) / 60
-        let seconds = Int(timeElapsed) % 60
+        let minutes = Int(elapsedTime) / 60
+        let seconds = Int(elapsedTime) % 60
         let value = String(format: "%02d:%02d", minutes, seconds)
         
         return value
@@ -28,31 +28,32 @@ class TimerPopUpViewModel: ObservableObject {
     
     init(timerDataStore:TimerDataStore) {
         self.timerDataStore = timerDataStore
-        self.timerDataStore.reset = reset
+        
+        self.timerDataStore.callbackChange = {
+            let interval = timerDataStore.intervals[self.timerBreak] ?? 0.0
+            
+            self.initialTime = interval
+            self.elapsedTime = interval
+        }
+        
         FocuseeNotificationCenter.shared.checkNotificationPermission()
-        timeElapsed = timerDataStore.intervals[.focus] ?? 0.0
+        elapsedTime = timerDataStore.intervals[.focus] ?? 0.0
         
-    }
-    
-    func onMainButtonPress() {
-        
-        uiState == .paused ? start() : pause()
     }
     
     func start() {
-        
         guard uiState == .paused else { return }
         
         if initialTime == 0 {
-            initialTime = timeElapsed
+            initialTime = elapsedTime
         }
         
         uiState = .running
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.timeElapsed -= 1
+            self?.elapsedTime -= 1
             
-            if self?.timeElapsed == 0 {
-                self?.finishCurrentSession()
+            if self?.elapsedTime == 0 {
+                self?.nextPhase()
             }
         }
     }
@@ -69,39 +70,35 @@ class TimerPopUpViewModel: ObservableObject {
 }
 
 extension TimerPopUpViewModel {
-    func renderSettingsView() -> some View {
-        return SettingsView(
-            goBack: {
-                self.changeRenderUiState(to: .timerPopUp)
-            }, viewModel: SettingsViewModel())
-    }
-}
-
-extension TimerPopUpViewModel {
-    private func finishCurrentSession() {
-        //TODO: Refact
+    private func nextPhase() {
         if countSession >= timerDataStore.sessionsLimitValue {
             
-            changeTimerBreakElapsed(.long)
-            scheduleNotificationByTimerBreak(.long)
             countSession = 0
             uiState = .breakTime
+            handleCycleTransition(from: .long)
             return
         }
+        
         if timerBreak == .short || timerBreak == .long {
             
-            reset()
-            changeTimerBreakElapsed(.focus)
-            scheduleNotificationByTimerBreak(.focus)
-            
+            resetTimer()
+            uiState = .paused
+            handleCycleTransition(from: .focus)
         } else {
             
             countSession += 1
-            changeTimerBreakElapsed(.short)
-            scheduleNotificationByTimerBreak(.short)
             uiState = .breakTime
+            handleCycleTransition(from: .short)
         }
         
+    }
+    
+    private func handleCycleTransition(from breakType:TimerBreak) {
+        
+        let notificationContent = TimerNotificationData.getNotificationContent(for: breakType)
+        
+        changeTimerBreakElapsed(breakType)
+        scheduleNotification(notificationContent: notificationContent)
     }
     
     private func scheduleNotification(notificationContent: TimerNotificationContent) {
@@ -109,25 +106,26 @@ extension TimerPopUpViewModel {
             title: notificationContent.title, body: notificationContent.body, timeInterval: 0.1)
     }
     
-    private func reset() {
-        uiState = .paused
+    private func resetTimer() {
         timer?.invalidate()
         timer = nil
-        
-        changeTimerBreakElapsed(.focus)
     }
     
-    private func scheduleNotificationByTimerBreak(_ breakType: TimerBreak) {
-        let notificationContent = TimerNotificationData.getNotificationContent(for: breakType)
-        scheduleNotification(notificationContent: notificationContent)
-    }
     
     private func changeTimerBreakElapsed(_ breakType: TimerBreak) {
         let interval = timerDataStore.intervals[breakType] ?? 0.0
         
         initialTime = interval
-        timeElapsed = interval
+        elapsedTime = interval
         timerBreak = breakType
-        
+    }
+}
+
+extension TimerPopUpViewModel {
+    func renderSettingsView() -> some View {
+        return SettingsView(
+            goBack: {
+                self.changeRenderUiState(to: .timerPopUp)
+            }, viewModel: SettingsViewModel())
     }
 }

@@ -16,7 +16,9 @@ class TimerDataStore:ObservableObject,TimerConfigObserver {
     @AppStorage("long-break-value") var longBreakValue = 15
     @AppStorage("sessions-limit-value") var sessionsLimitValue = 4
     var intervals:[TimerBreak:TimeInterval] = [:]
-    var reset:() -> Void = {}
+    var callbackChange:() -> Void = {}
+        
+    
     
     private init() {
         bundleInitializeIntervals()
@@ -51,7 +53,7 @@ class TimerDataStore:ObservableObject,TimerConfigObserver {
             break
         }
         
-        reset()
+        callbackChange()
     }
     
 }

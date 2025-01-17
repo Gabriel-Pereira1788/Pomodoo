@@ -29,7 +29,9 @@ extension TimerPopUpView {
 
             HStack {
                 Spacer(minLength: 85)
-                Button(action: viewModel.onMainButtonPress) {
+                Button(action: {
+                    viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
+                }) {
                     Text(viewModel.uiState == .paused ? "Start" : "Pause")
                         .padding(.vertical, 10)
                         .padding(.horizontal, 35)
@@ -40,7 +42,7 @@ extension TimerPopUpView {
                     .padding(.bottom, 10)
                 Spacer()
                 ButtonAction(iconSystemName: "gear") {
-                    viewModel.pause()
+//                    viewModel.pause()
                     viewModel.changeRenderUiState(to: .settings)
                 }
             }
