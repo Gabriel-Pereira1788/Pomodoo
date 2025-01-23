@@ -12,6 +12,7 @@ class TimerPopUpViewModel: ObservableObject {
     
     private var timer: Timer?
     private var initialTime: Double = 0.0
+    private var openPopover: () -> Void = { }
     
     var progress: Double {
         guard initialTime > 0 else { return 0.0 }
@@ -39,6 +40,10 @@ class TimerPopUpViewModel: ObservableObject {
         FocuseeNotificationCenter.shared.checkNotificationPermission()
         elapsedTime = timerDataStore.intervals[.focus] ?? 0.0
         
+    }
+    
+    func setOpenPopoverFunc(_ callback:@escaping () -> Void) {
+        openPopover = callback
     }
     
     func start() {
@@ -84,6 +89,7 @@ extension TimerPopUpViewModel {
             resetTimer()
             uiState = .paused
             handleCycleTransition(from: .focus)
+            openPopover()
         } else {
             
             countSession += 1

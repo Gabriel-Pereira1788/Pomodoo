@@ -30,9 +30,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             button.action = #selector(statusBarButtonClicked(_:))
             button.sendAction(on: [.rightMouseUp,.leftMouseUp])
-            
+            timerPopUpViewModel.setOpenPopoverFunc( {
+                self.openPopover(from: button)
+            })
             
         }
+        
         
         timerPopUpViewModel.$timerBreak.sink { [weak self] value in
             self?.statusBarItem?.button?.image = NSImage(
@@ -40,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 accessibilityDescription: "Menu Timer")
         }.store(in: &cancellables)
         
-        timerPopUpViewModel.$timeElapsed.sink { [weak self] value in
+        timerPopUpViewModel.$elapsedTime.sink { [weak self] value in
             let minutes = Int(value) / 60
             let seconds = Int(value) % 60
             let value = String(format: "%02d:%02d", minutes, seconds)
@@ -90,25 +93,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if popover?.isShown == true {
                 popover?.performClose(sender)
             } else {
-                let buttonBounds = button.bounds
-                
-                if let statusBarItem = statusBarItem {
-                    
-                    statusBarItem.length = 60
-                }
-                
-                let iconWidth = button.image?.size.width ?? 0
-                let iconX = buttonBounds.midX - iconWidth / 2
-                let iconRect = NSRect(
-                    x: iconX,
-                    y: 0,
-                    width: 20,
-                    height: buttonBounds.height
-                )
-                
-                popover?.show(relativeTo: iconRect, of: button, preferredEdge: .minY)
+                openPopover(from:button)
             }
         }
     }
     
+    @objc func openPopover(from button:NSStatusBarButton)
+    {
+        let buttonBounds = button.bounds
+        
+        if let statusBarItem = statusBarItem {
+            
+            statusBarItem.length = 60
+        }
+        
+        let iconWidth = button.image?.size.width ?? 0
+        let iconX = buttonBounds.midX - iconWidth / 2
+        let iconRect = NSRect(
+            x: iconX,
+            y: 0,
+            width: 20,
+            height: buttonBounds.height
+        )
+        
+        popover?.show(relativeTo: iconRect, of: button, preferredEdge: .minY)
+    }
 }

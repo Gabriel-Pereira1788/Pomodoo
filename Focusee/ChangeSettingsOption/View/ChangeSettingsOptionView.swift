@@ -8,7 +8,6 @@ struct ChangeSettingsOptionView: View {
         VStack(spacing:20) {
             HStack(alignment: .lastTextBaseline) {
                 ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {
-                    viewModel.changeTimerConfig(value: viewModel.value)
                     goBack()   
                 }
                 
