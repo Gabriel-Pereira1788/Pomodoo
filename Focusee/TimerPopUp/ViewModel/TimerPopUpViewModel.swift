@@ -2,13 +2,12 @@ import Foundation
 import SwiftUI
 
 class TimerPopUpViewModel: ObservableObject {
-    @Published var uiState: TimerUIState = .paused
-    @Published var renderUiState: TimerRenderUIState = .timerPopUp
     @Published var countSession = 0
+    @Published var uiState: TimerUIState = .paused
     @Published var timerBreak: TimerBreak = .focus
     @Published var elapsedTime: TimeInterval = 25 * 60
     
-    @ObservedObject var timerDataStore: TimerDataStore
+    @ObservedObject var timerDataStore = TimerDataStore.shared
     
     private var timer: Timer?
     private var initialTime: Double = 0.0
@@ -27,11 +26,9 @@ class TimerPopUpViewModel: ObservableObject {
         return value
     }
     
-    init(timerDataStore:TimerDataStore) {
-        self.timerDataStore = timerDataStore
-        
+    init() {
         self.timerDataStore.callbackChange = {
-            let interval = timerDataStore.intervals[self.timerBreak] ?? 0.0
+            let interval = self.timerDataStore.intervals[self.timerBreak] ?? 0.0
             
             self.initialTime = interval
             self.elapsedTime = interval
@@ -67,10 +64,6 @@ class TimerPopUpViewModel: ObservableObject {
         uiState = .paused
         timer?.invalidate()
         timer = nil
-    }
-    
-    func changeRenderUiState(to state: TimerRenderUIState) {
-        renderUiState = state
     }
 }
 
@@ -128,10 +121,5 @@ extension TimerPopUpViewModel {
 }
 
 extension TimerPopUpViewModel {
-    func renderSettingsView() -> some View {
-        return SettingsView(
-            goBack: {
-                self.changeRenderUiState(to: .timerPopUp)
-            }, viewModel: SettingsViewModel())
-    }
+
 }

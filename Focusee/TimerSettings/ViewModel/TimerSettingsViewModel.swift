@@ -1,12 +1,12 @@
 import SwiftUI
 
-class SettingsViewModel: ObservableObject {
-    @Published var uiState: SettingsUIState = .settings
+class TimerSettingsViewModel: ObservableObject {
+    @Published var uiState: TimerSettingsUIState = .settings
     @ObservedObject var timerDataStore = TimerDataStore.shared
 
     var selectedOption: TimerConfig = .focus(25)
 
-    func changeUIState(to state: SettingsUIState) {
+    func changeUIState(to state: TimerSettingsUIState) {
         uiState = state
     }
 

@@ -1,10 +1,3 @@
-//
-//  GlobalState.swift
-//  Focusee
-//
-//  Created by Gabriel Pereira on 11/01/25.
-//
-
 import SwiftUI
 
 
@@ -15,11 +8,12 @@ class TimerDataStore:ObservableObject,TimerConfigObserver {
     @AppStorage("short-break-value") var shortBreakValue = 5
     @AppStorage("long-break-value") var longBreakValue = 15
     @AppStorage("sessions-limit-value") var sessionsLimitValue = 4
+    @AppStorage("primary-color") var primaryColor = Color(.primay)
+    @AppStorage("secondary-color") var secondaryColor = Color(.secondary)
+    
     var intervals:[TimerBreak:TimeInterval] = [:]
     var callbackChange:() -> Void = {}
         
-    
-    
     private init() {
         bundleInitializeIntervals()
         TimerConfigNotifier.instance.addObserver(self)

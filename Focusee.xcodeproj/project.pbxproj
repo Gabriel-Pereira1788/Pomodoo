@@ -6,6 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9B18ECA32D4599A700CD026C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B18ECA22D4599A700CD026C /* ServiceManagement.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9B18ECAB2D459A1B00CD026C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9B33EC302D2DFD4E00439338 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B18ECCC2D459AE800CD026C;
+			remoteInfo = LauncherHelper;
+		};
+		9B18ECDF2D459F5D00CD026C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9B33EC302D2DFD4E00439338 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B18ECCC2D459AE800CD026C;
+			remoteInfo = LauncherHelper;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		9BB813BD2D343B6400F55000 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -20,6 +41,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9B18ECA22D4599A700CD026C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		9B18ECAE2D459A2700CD026C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9B33EC382D2DFD4E00439338 /* Focusee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Focusee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB813A72D343B6300F55000 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		9BB813A92D343B6300F55000 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -38,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B18ECA32D4599A700CD026C /* ServiceManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +88,8 @@
 		9BB813A62D343B6300F55000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B18ECAE2D459A2700CD026C /* Cocoa.framework */,
+				9B18ECA22D4599A700CD026C /* ServiceManagement.framework */,
 				9BB813A72D343B6300F55000 /* WidgetKit.framework */,
 				9BB813A92D343B6300F55000 /* SwiftUI.framework */,
 			);
@@ -85,6 +111,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9B18ECAC2D459A1B00CD026C /* PBXTargetDependency */,
+				9B18ECE02D459F5D00CD026C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				9B33EC3A2D2DFD4E00439338 /* Focusee */,
@@ -149,6 +177,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9B18ECAC2D459A1B00CD026C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			targetProxy = 9B18ECAB2D459A1B00CD026C /* PBXContainerItemProxy */;
+		};
+		9B18ECE02D459F5D00CD026C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			targetProxy = 9B18ECDF2D459F5D00CD026C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9B33EC4A2D2DFD4F00439338 /* Debug */ = {
@@ -279,7 +318,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Focusee/Preview Content\"";
-				DEVELOPMENT_TEAM = X6ZWT96PYP;
+				DEVELOPMENT_TEAM = HDY45LN42J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Focusee/Info.plist;
@@ -309,7 +348,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Focusee/Preview Content\"";
-				DEVELOPMENT_TEAM = X6ZWT96PYP;
+				DEVELOPMENT_TEAM = HDY45LN42J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Focusee/Info.plist;

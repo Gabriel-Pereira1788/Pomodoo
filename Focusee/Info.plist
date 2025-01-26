@@ -16,6 +16,10 @@
 	<string>NSApplication</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>SMLoginItemChildren</key>
+	<array>
+		<string>bytebuilder.LaunchHelper</string>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

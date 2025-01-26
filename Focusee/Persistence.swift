@@ -1,10 +1,3 @@
-//
-//  Persistence.swift
-//  Focusee
-//
-//  Created by Gabriel Pereira on 07/01/25.
-//
-
 import CoreData
 
 struct PersistenceController {

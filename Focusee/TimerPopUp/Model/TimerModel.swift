@@ -29,11 +29,6 @@ enum TimerUIState {
     case paused
 }
 
-enum TimerRenderUIState {
-    case timerPopUp
-    case settings
-}
-
 struct TimerNotificationContent {
     var title:String
     var body:String

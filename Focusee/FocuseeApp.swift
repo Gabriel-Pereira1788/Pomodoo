@@ -4,24 +4,30 @@ import SwiftUI
 @main
 struct FocuseeApp: App {
     let persistenceController = PersistenceController.shared
+    
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         Settings {
-            EmptyView()
+            TimerSettingsView(goBack: {}, viewModel: TimerSettingsViewModel())
         }
     }
 }
 
+
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusBarItem: NSStatusItem?
-    var popover: NSPopover?
+    private let statusBarManager = StatusBarManager()
+    private let popoverManager = PopoverManager()
     
     private var cancellables = Set<AnyCancellable>()
-    @ObservedObject var timerPopUpViewModel = TimerPopUpViewModel(timerDataStore: TimerDataStore.shared)
+    @ObservedObject var timerPopUpViewModel = TimerPopUpViewModel()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
+        
         statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusBarManager.setStatusBarItem(statusBarItem)
         
         if let button = statusBarItem?.button {
             button.image = NSImage(
@@ -36,7 +42,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
         }
         
-        
         timerPopUpViewModel.$timerBreak.sink { [weak self] value in
             self?.statusBarItem?.button?.image = NSImage(
                 systemSymbolName: value == .focus ? "clock" : "cup.and.heat.waves",
@@ -50,48 +55,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self?.statusBarItem?.button?.title = value
         }.store(in: &cancellables)
         
-        popover = NSPopover()
-        popover?.contentViewController = NSHostingController(
+        let hostingController = NSHostingController(
             rootView: TimerPopUpView(
-                redirectToSettingsView:{},
-                viewModel: timerPopUpViewModel))
-        popover?.behavior = .transient
+                viewModel: timerPopUpViewModel
+            )
+        )
+        
+        popoverManager.setContentViewController(hostingController)
     }
     
     @objc func statusBarButtonClicked(_ sender: Any?) {
         let event = NSApp.currentEvent!
         if event.type == NSEvent.EventType.rightMouseUp {
-            showCustomMenu()
+            statusBarManager.showCustomMenu()
         } else {
             togglePopover(sender)
         }
     }
     
-    
-    
-    @objc  func showCustomMenu() {
-        let statusBarMenu = NSMenu(title: "Status Bar Menu")
-        
-        statusBarMenu.addItem(
-            withTitle: "Quit",
-            action: #selector(AppDelegate.quitApplication),
-            keyEquivalent: "")
-        
-        statusBarItem?.menu = statusBarMenu
-        
-        statusBarItem?.button?.performClick(nil)
-        
-        statusBarItem?.menu = nil
-    }
-    
-    @objc func quitApplication() {
-        NSApplication.shared.terminate(self)
-    }
-    
     @objc func togglePopover(_ sender: Any?) {
         if let button = statusBarItem?.button {
-            if popover?.isShown == true {
-                popover?.performClose(sender)
+            if popoverManager.isShown() {
+                popoverManager.close(sender)
             } else {
                 openPopover(from:button)
             }
@@ -100,22 +85,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc func openPopover(from button:NSStatusBarButton)
     {
-        let buttonBounds = button.bounds
-        
         if let statusBarItem = statusBarItem {
             
             statusBarItem.length = 60
         }
         
-        let iconWidth = button.image?.size.width ?? 0
-        let iconX = buttonBounds.midX - iconWidth / 2
-        let iconRect = NSRect(
-            x: iconX,
-            y: 0,
-            width: 20,
-            height: buttonBounds.height
-        )
-        
-        popover?.show(relativeTo: iconRect, of: button, preferredEdge: .minY)
+        popoverManager.open(from: button)
+    }
+    
+    func applicationOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        return true
     }
 }

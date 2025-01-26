@@ -1,10 +1,4 @@
 import Foundation
-//
-//  FocuseeNotificationCenter.swift
-//  Focusee
-//
-//  Created by Gabriel Pereira on 13/01/25.
-//
 import SwiftUI
 import UserNotifications
 
