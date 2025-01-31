@@ -77,7 +77,7 @@ extension TimerSettingsView {
                         .foregroundStyle(Color(.gray))
                     Button(action:{}) {
                         Image(systemName:"chevron.right")
-                            .font(.system(size: 20))
+                            .font(.system(size: 15))
                             .foregroundStyle(Color(.gray))
                     }
                     .buttonStyle(.plain)
