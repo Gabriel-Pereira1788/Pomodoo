@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
+	<string>Pomodoo</string>
 	<key>CFBundleIdentifier</key>
-	<string>bytebuilder.Focusee</string>
+	<string>bytebuilder.Pomodoo</string>
 	<key>CFBundleName</key>
-	<string>Focusee</string>
+	<string>Pomodoo</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -16,10 +16,6 @@
 	<string>NSApplication</string>
 	<key>LSUIElement</key>
 	<true/>
-	<key>SMLoginItemChildren</key>
-	<array>
-		<string>bytebuilder.LaunchHelper</string>
-	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

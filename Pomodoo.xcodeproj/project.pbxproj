@@ -10,23 +10,6 @@
 		9B18ECA32D4599A700CD026C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B18ECA22D4599A700CD026C /* ServiceManagement.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9B18ECAB2D459A1B00CD026C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9B33EC302D2DFD4E00439338 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9B18ECCC2D459AE800CD026C;
-			remoteInfo = LauncherHelper;
-		};
-		9B18ECDF2D459F5D00CD026C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9B33EC302D2DFD4E00439338 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9B18ECCC2D459AE800CD026C;
-			remoteInfo = LauncherHelper;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		9BB813BD2D343B6400F55000 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -43,15 +26,28 @@
 /* Begin PBXFileReference section */
 		9B18ECA22D4599A700CD026C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		9B18ECAE2D459A2700CD026C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		9B33EC382D2DFD4E00439338 /* Focusee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Focusee.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B33EC382D2DFD4E00439338 /* Pomodoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB813A72D343B6300F55000 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		9BB813A92D343B6300F55000 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9B4C5E6D2D5B5F350034E0E5 /* Exceptions for "Pomodoo" folder in "Pomodoo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9B33EC372D2DFD4E00439338 /* Pomodoo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9B33EC3A2D2DFD4E00439338 /* Focusee */ = {
+		9B33EC3A2D2DFD4E00439338 /* Pomodoo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Focusee;
+			exceptions = (
+				9B4C5E6D2D5B5F350034E0E5 /* Exceptions for "Pomodoo" folder in "Pomodoo" target */,
+			);
+			path = Pomodoo;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -71,7 +67,7 @@
 		9B33EC2F2D2DFD4E00439338 = {
 			isa = PBXGroup;
 			children = (
-				9B33EC3A2D2DFD4E00439338 /* Focusee */,
+				9B33EC3A2D2DFD4E00439338 /* Pomodoo */,
 				9BB813A62D343B6300F55000 /* Frameworks */,
 				9B33EC392D2DFD4E00439338 /* Products */,
 			);
@@ -80,7 +76,7 @@
 		9B33EC392D2DFD4E00439338 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9B33EC382D2DFD4E00439338 /* Focusee.app */,
+				9B33EC382D2DFD4E00439338 /* Pomodoo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9B33EC372D2DFD4E00439338 /* Focusee */ = {
+		9B33EC372D2DFD4E00439338 /* Pomodoo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9B33EC4C2D2DFD4F00439338 /* Build configuration list for PBXNativeTarget "Focusee" */;
+			buildConfigurationList = 9B33EC4C2D2DFD4F00439338 /* Build configuration list for PBXNativeTarget "Pomodoo" */;
 			buildPhases = (
 				9B33EC342D2DFD4E00439338 /* Sources */,
 				9B33EC352D2DFD4E00439338 /* Frameworks */,
@@ -111,17 +107,15 @@
 			buildRules = (
 			);
 			dependencies = (
-				9B18ECAC2D459A1B00CD026C /* PBXTargetDependency */,
-				9B18ECE02D459F5D00CD026C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				9B33EC3A2D2DFD4E00439338 /* Focusee */,
+				9B33EC3A2D2DFD4E00439338 /* Pomodoo */,
 			);
-			name = Focusee;
+			name = Pomodoo;
 			packageProductDependencies = (
 			);
 			productName = Focusee;
-			productReference = 9B33EC382D2DFD4E00439338 /* Focusee.app */;
+			productReference = 9B33EC382D2DFD4E00439338 /* Pomodoo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -139,7 +133,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9B33EC332D2DFD4E00439338 /* Build configuration list for PBXProject "Focusee" */;
+			buildConfigurationList = 9B33EC332D2DFD4E00439338 /* Build configuration list for PBXProject "Pomodoo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -153,7 +147,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9B33EC372D2DFD4E00439338 /* Focusee */,
+				9B33EC372D2DFD4E00439338 /* Pomodoo */,
 			);
 		};
 /* End PBXProject section */
@@ -177,17 +171,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9B18ECAC2D459A1B00CD026C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			targetProxy = 9B18ECAB2D459A1B00CD026C /* PBXContainerItemProxy */;
-		};
-		9B18ECE02D459F5D00CD026C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			targetProxy = 9B18ECDF2D459F5D00CD026C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9B33EC4A2D2DFD4F00439338 /* Debug */ = {
@@ -313,25 +296,26 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Focusee/Focusee.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Pomodoo/Pomodoo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Focusee/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Pomodoo/Preview Content\"";
 				DEVELOPMENT_TEAM = HDY45LN42J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Focusee/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Focusee;
+				INFOPLIST_FILE = Pomodoo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Pomodoo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = bytebuilder.Focusee;
+				PRODUCT_BUNDLE_IDENTIFIER = bytebuilder.Pomodoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -343,25 +327,26 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Focusee/Focusee.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Pomodoo/Pomodoo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Focusee/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Pomodoo/Preview Content\"";
 				DEVELOPMENT_TEAM = HDY45LN42J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Focusee/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Focusee;
+				INFOPLIST_FILE = Pomodoo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Pomodoo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = bytebuilder.Focusee;
+				PRODUCT_BUNDLE_IDENTIFIER = bytebuilder.Pomodoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -371,7 +356,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9B33EC332D2DFD4E00439338 /* Build configuration list for PBXProject "Focusee" */ = {
+		9B33EC332D2DFD4E00439338 /* Build configuration list for PBXProject "Pomodoo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9B33EC4A2D2DFD4F00439338 /* Debug */,
@@ -380,7 +365,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9B33EC4C2D2DFD4F00439338 /* Build configuration list for PBXNativeTarget "Focusee" */ = {
+		9B33EC4C2D2DFD4F00439338 /* Build configuration list for PBXNativeTarget "Pomodoo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9B33EC4D2D2DFD4F00439338 /* Debug */,

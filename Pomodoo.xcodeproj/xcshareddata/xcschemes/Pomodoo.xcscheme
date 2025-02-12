@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9B33EC372D2DFD4E00439338"
-               BuildableName = "Focusee.app"
-               BlueprintName = "Focusee"
-               ReferencedContainer = "container:Focusee.xcodeproj">
+               BuildableName = "Pomodoo.app"
+               BlueprintName = "Pomodoo"
+               ReferencedContainer = "container:Pomodoo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9B33EC372D2DFD4E00439338"
-            BuildableName = "Focusee.app"
-            BlueprintName = "Focusee"
-            ReferencedContainer = "container:Focusee.xcodeproj">
+            BuildableName = "Pomodoo.app"
+            BlueprintName = "Pomodoo"
+            ReferencedContainer = "container:Pomodoo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9B33EC372D2DFD4E00439338"
-            BuildableName = "Focusee.app"
-            BlueprintName = "Focusee"
-            ReferencedContainer = "container:Focusee.xcodeproj">
+            BuildableName = "Pomodoo.app"
+            BlueprintName = "Pomodoo"
+            ReferencedContainer = "container:Pomodoo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
