@@ -60,6 +60,10 @@ class TimerPopUpViewModel: ObservableObject {
         }
     }
 
+    func prevPhase() {
+
+    }
+
     func pause() {
         uiState = .paused
         timer?.invalidate()
@@ -68,7 +72,7 @@ class TimerPopUpViewModel: ObservableObject {
 }
 
 extension TimerPopUpViewModel {
-    private func nextPhase() {
+    func nextPhase() {
         if countSession >= timerDataStore.sessionsLimitValue {
 
             countSession = 0

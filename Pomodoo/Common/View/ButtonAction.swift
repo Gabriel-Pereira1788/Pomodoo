@@ -11,10 +11,26 @@ struct ButtonAction: View {
         Button(
             action: action,
             label: {
-                VStack {
+                ZStack {
+
                     Image(systemName: iconSystemName)
                         .font(.system(size: iconSize / 2))
+
                 }.modifier(ButtonStyleV(iconSize: iconSize, backgroundColor: backgroundColor))
+                    .background(
+
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    gradient: Gradient(colors: [
+                                        backgroundColor.opacity(1.5),
+                                        backgroundColor.opacity(1.5),
+                                        Color.white,
+                                    ]), center: .center, startRadius: 1, endRadius: 50)
+                            )
+                            .blur(radius: 5)
+                    )
+
             }
         ).buttonStyle(.plain)
 

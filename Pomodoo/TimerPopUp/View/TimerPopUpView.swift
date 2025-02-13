@@ -6,55 +6,50 @@ struct TimerPopUpView: View {
     @Environment(\.openSettings) private var openSettings
     var body: some View {
         ZStack {
-            renderTimerPopUpContent()
+            VStack(spacing: 15) {
+                HStack {
+                    Spacer()
+                    ButtonAction(iconSystemName: "gear") {
+                        openSettings()
+                    }
+                }
+                ZStack {
+                    renderTimer()
+                    CircularProgressView(
+                        progress: viewModel.progress,
+                        colors: [
+                            viewModel.timerDataStore.primaryColor,
+                            viewModel.timerDataStore.primaryColor,
+                            viewModel.timerDataStore.secondaryColor,
+                            .white.opacity(0.0),
+                        ])
+                }
+
+                HStack {
+                    Spacer()
+                    HStack(spacing: 10) {
+                        ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {}
+                        ButtonAction(
+                            iconSystemName: viewModel.uiState == .paused ? "play" : "pause",
+                            iconSize: 50,
+                            backgroundColor: viewModel.timerDataStore.primaryColor
+                        ) {
+                            viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
+                        }
+                        ButtonAction(iconSystemName: "chevron.right", iconSize: 30) {
+                            viewModel.nextPhase()
+                        }
+                    }
+
+                    Spacer()
+
+                }
+
+            }
+            .padding()
+            .frame(width: 300, height: 350)
         }
 
-    }
-}
-
-extension TimerPopUpView {
-    func renderTimerPopUpContent() -> some View {
-        VStack(alignment: .center, spacing: 15) {
-            ZStack {
-                renderTimer()
-                CircularProgressView(
-                    progress: viewModel.progress,
-                    colors: [
-                        viewModel.timerDataStore.primaryColor,
-                        viewModel.timerDataStore.primaryColor,
-                        viewModel.timerDataStore.secondaryColor,
-                        .white.opacity(0.0),
-                    ])
-            }
-
-            HStack {
-                Spacer(minLength: 110)
-                ButtonAction(
-                    iconSystemName: viewModel.uiState == .paused ? "play" : "pause", iconSize: 50,
-                    backgroundColor: viewModel.timerDataStore.primaryColor
-                ) {
-                    viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
-                }
-                // Button(action: {
-                //     viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
-                // }) {
-                //     Text(viewModel.uiState == .paused ? "Start" : "Pause")
-                //         .padding(.vertical, 10)
-                //         .padding(.horizontal, 35)
-                //         .foregroundColor(.white)
-                //         .background(Color(.darkGray))
-                //         .clipShape(.capsule)
-                // }.buttonStyle(.plain)
-                //     .padding(.bottom, 10)
-                Spacer()
-                ButtonAction(iconSystemName: "gear") {
-                    openSettings()
-                }
-            }
-
-        }
-        .padding()
-        .frame(width: 300, height: 300)
     }
 }
 
