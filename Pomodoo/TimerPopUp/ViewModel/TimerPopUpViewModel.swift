@@ -60,8 +60,13 @@ class TimerPopUpViewModel: ObservableObject {
         }
     }
 
-    func prevPhase() {
+    func onPressPrevPhase() {
+        prevPhase()
 
+    }
+
+    func onPressNextPhase() {
+        self.nextPhase()
     }
 
     func pause() {
@@ -72,25 +77,40 @@ class TimerPopUpViewModel: ObservableObject {
 }
 
 extension TimerPopUpViewModel {
-    func nextPhase() {
-        if countSession >= timerDataStore.sessionsLimitValue {
 
+    func prevPhase() {
+        if countSession > 0 {
+            resetTimer()
+            uiState = .paused
+            if timerBreak == .short || timerBreak == .long {
+
+                countSession -= 1
+                handleCycleTransition(from: .focus)
+            } else if timerBreak == .focus {
+
+                handleCycleTransition(from: .short)
+
+            }
+        }
+
+    }
+
+    func nextPhase() {
+        resetTimer()
+        uiState = .paused
+        openPopover()
+        if countSession >= timerDataStore.sessionsLimitValue {
             countSession = 0
-            uiState = .breakTime
             handleCycleTransition(from: .long)
             return
         }
 
         if timerBreak == .short || timerBreak == .long {
 
-            resetTimer()
-            uiState = .paused
             handleCycleTransition(from: .focus)
-            openPopover()
-        } else {
 
+        } else {
             countSession += 1
-            uiState = .breakTime
             handleCycleTransition(from: .short)
         }
 
