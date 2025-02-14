@@ -60,15 +60,6 @@ class TimerPopUpViewModel: ObservableObject {
         }
     }
 
-    func onPressPrevPhase() {
-        prevPhase()
-
-    }
-
-    func onPressNextPhase() {
-        self.nextPhase()
-    }
-
     func pause() {
         uiState = .paused
         timer?.invalidate()

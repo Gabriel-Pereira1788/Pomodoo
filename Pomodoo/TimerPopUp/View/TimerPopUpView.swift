@@ -29,7 +29,7 @@ struct TimerPopUpView: View {
                     Spacer()
                     HStack(spacing: 10) {
                         ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {
-                            viewModel.onPressPrevPhase()
+                            viewModel.prevPhase()
                         }
                         ButtonAction(
                             iconSystemName: viewModel.uiState == .paused ? "play" : "pause",
@@ -39,7 +39,7 @@ struct TimerPopUpView: View {
                             viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
                         }
                         ButtonAction(iconSystemName: "chevron.right", iconSize: 30) {
-                            viewModel.onPressNextPhase()
+                            viewModel.nextPhase()
                         }
                     }
 
