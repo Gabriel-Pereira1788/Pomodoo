@@ -8,6 +8,9 @@ struct TimerPopUpView: View {
         ZStack {
             VStack(spacing: 15) {
                 HStack {
+                    ButtonAction(iconSystemName:"arrow.trianglehead.clockwise"){
+                        viewModel.onReset()
+                    }
                     Spacer()
                     ButtonAction(iconSystemName: "gear") {
                         openSettings()

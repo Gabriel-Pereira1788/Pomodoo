@@ -68,7 +68,14 @@ class TimerPopUpViewModel: ObservableObject {
 }
 
 extension TimerPopUpViewModel {
-
+    
+    func onReset() {
+        countSession = 0
+        uiState = .paused
+        resetTimer()
+        changeTimerBreakElapsed(.focus)
+    }
+    
     func prevPhase() {
         if countSession > 0 {
             resetTimer()
