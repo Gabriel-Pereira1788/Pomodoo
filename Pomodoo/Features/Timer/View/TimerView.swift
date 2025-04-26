@@ -1,9 +1,11 @@
 import SwiftUI
 
-struct TimerPopUpView: View {
-    @ObservedObject var viewModel: TimerPopUpViewModel
-
+struct TimerView: View {
+    
+    @ObservedObject var viewModel: TimerViewModel
+    @EnvironmentObject var dataStore:DataStore
     @Environment(\.openSettings) private var openSettings
+    
     var body: some View {
         ZStack {
             VStack(spacing: 15) {
@@ -21,13 +23,13 @@ struct TimerPopUpView: View {
                     CircularProgressView(
                         progress: viewModel.progress,
                         colors: [
-                            viewModel.timerDataStore.primaryColor,
-                            viewModel.timerDataStore.primaryColor,
-                            viewModel.timerDataStore.secondaryColor,
+                            dataStore.primaryColor,
+                            dataStore.primaryColor,
+                            dataStore.secondaryColor,
                             .white.opacity(0.0),
                         ])
                 }
-
+                
                 HStack {
                     Spacer()
                     HStack(spacing: 10) {
@@ -37,7 +39,7 @@ struct TimerPopUpView: View {
                         ButtonAction(
                             iconSystemName: viewModel.uiState == .paused ? "play" : "pause",
                             iconSize: 50,
-                            backgroundColor: viewModel.timerDataStore.primaryColor
+                            backgroundColor: dataStore.primaryColor
                         ) {
                             viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
                         }
@@ -45,46 +47,48 @@ struct TimerPopUpView: View {
                             viewModel.nextPhase()
                         }
                     }
-
+                    
                     Spacer()
-
+                    
                 }
-
+                
             }
             .padding()
             .frame(width: 300, height: 350)
+        }.onAppear(){
+            viewModel.setDataStore(dataStore)
         }
-
+        
     }
 }
 
-extension TimerPopUpView {
-
+extension TimerView {
+    
     func renderTimer() -> some View {
         VStack(alignment: .center, spacing: 6) {
             Image(systemName: viewModel.timerBreak == .focus ? "eye" : "cup.and.heat.waves")
                 .font(.system(size: 20))
-
+            
             Text(viewModel.timeString)
                 .fontWeight(.medium)
                 .font(.system(size: 50))
-
+            
             renderSessionsCount()
-
+            
             Text(viewModel.timerBreak.description)
                 .foregroundStyle(Color(.darkGray))
                 .font(.caption2)
                 .padding(.top, 10)
         }
     }
-
+    
     func renderSessionsCount() -> some View {
         HStack(spacing: 10) {
-            ForEach(0..<viewModel.timerDataStore.sessionsLimitValue, id: \.self) { index in
+            ForEach(0..<dataStore.sessionsLimitValue, id: \.self) { index in
                 Rectangle().frame(width: 3, height: 7)
                     .foregroundColor(
                         viewModel.countSession > index
-                            ? viewModel.timerDataStore.primaryColor : Color(.darkGray)
+                        ? dataStore.primaryColor : Color(.darkGray)
                     )
                     .cornerRadius(10)
             }
@@ -93,6 +97,11 @@ extension TimerPopUpView {
 }
 
 #Preview {
-    TimerPopUpView(
-        viewModel: TimerPopUpViewModel())
+    TimerView(
+        viewModel: TimerViewModel(
+            timerConfigNotifier: TimerConfigNotifier.shared,
+            notificationService: NotificationService.shared
+        )
+    )
+    
 }

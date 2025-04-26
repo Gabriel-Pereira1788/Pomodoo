@@ -1,58 +1,57 @@
 import SwiftUI
 
-struct ChangeSettingsOptionView: View {
-    var goBack:() -> Void
-    @ObservedObject var viewModel: ChangeSettingsOptionViewModel
-    
+struct SettingsOptionView: View {
+    var goBack: () -> Void
+    @ObservedObject var viewModel: SettingsOptionViewModel
+
     var body: some View {
-        VStack(spacing:20) {
+        VStack(spacing: 20) {
             HStack(alignment: .lastTextBaseline) {
                 ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {
-                    goBack()   
+                    goBack()
                 }
-                
+
                 Spacer()
-            }.frame(maxWidth:.infinity)
-            
+            }.frame(maxWidth: .infinity)
+
             Text(viewModel.option.title)
                 .font(.title)
-            
-            HStack(spacing:20) {
-                
-                Button(action:viewModel.decressValue){
+
+            HStack(spacing: 20) {
+
+                Button(action: viewModel.decressValue) {
                     VStack {
-                        Image(systemName:"minus")
+                        Image(systemName: "minus")
                             .font(.system(size: 14))
-                        
+
                     }.modifier(ButtonStyle())
-                    
+
                 }.buttonStyle(.plain)
-                
-                
+
                 Text("\(viewModel.value)")
                     .font(.title)
                     .fontWeight(.medium)
-                
-                Button(action:viewModel.incressValue){
+
+                Button(action: viewModel.incressValue) {
                     VStack {
-                        Image(systemName:"plus")
+                        Image(systemName: "plus")
                             .font(.system(size: 14))
-                        
+
                     }.modifier(ButtonStyle())
                 }.buttonStyle(.plain)
             }
             Spacer()
-        }.frame(maxWidth: 260,maxHeight: 200)
-            .padding(.horizontal,30)
-            .padding(.vertical,20)
-        
+        }.frame(maxWidth: 260, maxHeight: 200)
+            .padding(.horizontal, 30)
+            .padding(.vertical, 20)
+
     }
 }
 
 struct ButtonStyle: ViewModifier {
-    func body(content:Content) -> some View {
+    func body(content: Content) -> some View {
         content.frame(height: 32)
-            .padding(.horizontal,10)
+            .padding(.horizontal, 10)
             .font(Font.system(.title3).bold())
             .background(Color(.darkGray).opacity(0.1))
             .foregroundColor(.white)
@@ -61,13 +60,14 @@ struct ButtonStyle: ViewModifier {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color(.white).opacity(0.6), lineWidth: 1)
             }
-        
+
     }
 }
 
 #Preview {
-    
-    ChangeSettingsOptionView(goBack:{
-        
-    },viewModel: ChangeSettingsOptionViewModel(option: .longBreak(15)))
+
+    SettingsOptionView(
+        goBack: {
+
+        }, viewModel: SettingsOptionViewModel(option: .longBreak(15), timerConfigNotifier: TimerConfigNotifier.shared))
 }

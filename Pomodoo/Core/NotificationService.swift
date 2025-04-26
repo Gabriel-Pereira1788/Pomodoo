@@ -2,8 +2,16 @@ import Foundation
 import SwiftUI
 import UserNotifications
 
-class FocuseeNotificationCenter {
-    static let shared = FocuseeNotificationCenter()
+
+protocol NotificationServiceProtocol {
+    func requestNotificationPermissions()
+    func checkNotificationPermission()
+    func scheduleNotification(title: String, body: String, timeInterval: TimeInterval)
+    static var shared: NotificationService { get }
+}
+
+class NotificationService:NotificationServiceProtocol {
+    static var shared = NotificationService()
     private var permissionGranted = false
 
     private init() {

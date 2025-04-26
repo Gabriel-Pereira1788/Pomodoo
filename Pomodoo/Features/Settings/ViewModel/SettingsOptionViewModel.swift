@@ -1,11 +1,14 @@
 import SwiftUI
 
-class ChangeSettingsOptionViewModel:ObservableObject {
+class SettingsOptionViewModel:ObservableObject {
     @Published var option:TimerConfig
     @Published var value = 0
+    private var timerConfigNotifier:TimerConfigNotifierProtocol
     
-    init(option:TimerConfig){
+    init(option:TimerConfig,timerConfigNotifier:TimerConfigNotifierProtocol){
         self.option = option
+        self.timerConfigNotifier = timerConfigNotifier
+        
         self.value = Int(option.value) ?? 0
     }
     
@@ -25,16 +28,16 @@ class ChangeSettingsOptionViewModel:ObservableObject {
     func changeTimerConfig(value:Int) {
         switch option {
         case .focus:
-            TimerConfigNotifier.instance.changeValue(.focus(value))
+            timerConfigNotifier.changeValue(.focus(value))
             break
         case .longBreak:
-            TimerConfigNotifier.instance.changeValue(.longBreak(value))
+            timerConfigNotifier.changeValue(.longBreak(value))
             break
         case .shortBreak:
-            TimerConfigNotifier.instance.changeValue(.shortBreak(value))
+            timerConfigNotifier.changeValue(.shortBreak(value))
             break
         case .sessions:
-            TimerConfigNotifier.instance.changeValue(.sessions(value))
+            timerConfigNotifier.changeValue(.sessions(value))
             break
         }
     }

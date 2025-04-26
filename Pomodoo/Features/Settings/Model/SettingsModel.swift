@@ -1,4 +1,4 @@
-enum TimerSettingsUIState {
+enum SettingsUIState {
     case settings
     case changeOption
 }

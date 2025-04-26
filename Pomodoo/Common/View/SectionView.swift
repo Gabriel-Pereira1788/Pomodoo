@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TimerSettingsSectionView<Content:View>:View {
+struct SectionView<Content:View>:View {
     var title:String
     var content: () -> Content
     

@@ -1,10 +1,10 @@
 import SwiftUI
 import Foundation
 
-struct TimerSettingsView: View {
+struct SettingsView: View {
     var goBack: () -> Void
-    @StateObject var viewModel:TimerSettingsViewModel
-    
+    @StateObject var viewModel:SettingsViewModel
+    @EnvironmentObject var dataStore:DataStore
     var body: some View {
         ZStack {
             switch viewModel.uiState {
@@ -17,7 +17,7 @@ struct TimerSettingsView: View {
     }
 }
 
-extension TimerSettingsView {
+extension SettingsView {
     
     func renderSettingsContent() -> some View {
         VStack {
@@ -27,20 +27,20 @@ extension TimerSettingsView {
             }.frame(maxWidth:.infinity)
             
             VStack(spacing:20) {
-                TimerSettingsSectionView(title: "Colors"){
+                SectionView(title: "Colors"){
                     VStack {
-                        renderColorPicker(label: "Primary Color", selection: $viewModel.timerDataStore.primaryColor)
-                        renderColorPicker(label: "Secondary Color", selection: $viewModel.timerDataStore.secondaryColor)
+                        renderColorPicker(label: "Primary Color", selection: $dataStore.primaryColor)
+                        renderColorPicker(label: "Secondary Color", selection: $dataStore.secondaryColor)
                     }
                     
                 }
                 
-                TimerSettingsSectionView(title:"Intervals") {
+                SectionView(title:"Intervals") {
                     VStack{
-                        renderSettingsOption(option: .focus(viewModel.timerDataStore.focusValue))
-                        renderSettingsOption(option: .longBreak(viewModel.timerDataStore.longBreakValue))
-                        renderSettingsOption(option: .shortBreak(viewModel.timerDataStore.shortBreakValue))
-                        renderSettingsOption(option: .sessions(viewModel.timerDataStore.sessionsLimitValue))
+                        renderSettingsOption(option: .focus(dataStore.focusValue))
+                        renderSettingsOption(option: .longBreak(dataStore.longBreakValue))
+                        renderSettingsOption(option: .shortBreak(dataStore.shortBreakValue))
+                        renderSettingsOption(option: .sessions(dataStore.sessionsLimitValue))
                     }
                 }
             }
@@ -50,7 +50,7 @@ extension TimerSettingsView {
     }
 }
 
-extension TimerSettingsView {
+extension SettingsView {
     func renderColorPicker(label:String,selection:Binding<Color>) -> some View {
         HStack {
             Text(label).font(.subheadline)
@@ -91,5 +91,7 @@ extension TimerSettingsView {
 }
 
 #Preview {
-    TimerSettingsView(goBack:{},viewModel: TimerSettingsViewModel())
+    SettingsView(goBack:{},viewModel: SettingsViewModel(
+        timerConfigNotifier: TimerConfigNotifier.shared
+    ))
 }

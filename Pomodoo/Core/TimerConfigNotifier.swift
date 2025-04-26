@@ -7,8 +7,14 @@ protocol TimerConfigObserver:AnyObject {
     func didChangeTimerConfig(_ data:TimerConfig)
 }
 
-class TimerConfigNotifier {
-    static var instance:TimerConfigNotifier = TimerConfigNotifier()
+protocol TimerConfigNotifierProtocol {
+    static var shared:TimerConfigNotifier { get }
+    func addObserver(_ observer:TimerConfigObserver)
+    func changeValue(_ config:TimerConfig)
+}
+
+class TimerConfigNotifier:TimerConfigNotifierProtocol {
+    static var shared = TimerConfigNotifier()
     
     private var cancellable:AnyCancellable?
     private var dataPublisher = PassthroughSubject<TimerConfig,Never>()
@@ -19,14 +25,12 @@ class TimerConfigNotifier {
         setupCancellabe()
     }
     
-    
     deinit {
         cancellable?.cancel()
     }
     
     private func setupCancellabe() {
         cancellable = dataPublisher.sink {[unowned self] value in
-            
             for observer in self.observers {
                 observer.didChangeTimerConfig(value)
             }

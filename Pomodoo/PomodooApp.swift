@@ -9,8 +9,12 @@ struct FocuseeApp: App {
     
     var body: some Scene {
         Settings {
-            TimerSettingsView(goBack: {}, viewModel: TimerSettingsViewModel())
-        }
+            SettingsView(goBack: {}, viewModel: SettingsViewModel(
+                timerConfigNotifier: TimerConfigNotifier.shared
+            ))
+        }.environmentObject(DataStore(
+            timerConfigNotifier: TimerConfigNotifier.shared
+        ))
     }
 }
 
@@ -21,13 +25,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let popoverManager = PopoverManager()
     
     private var cancellables = Set<AnyCancellable>()
-    @ObservedObject var timerPopUpViewModel = TimerPopUpViewModel()
+    private var dataStore = DataStore(
+        timerConfigNotifier: TimerConfigNotifier.shared
+    )
+    @ObservedObject var timerViewModel = TimerViewModel(
+        timerConfigNotifier: TimerConfigNotifier.shared,
+        notificationService: NotificationService.shared
+    )
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
         
         statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusBarManager.setStatusBarItem(statusBarItem)
+        timerViewModel.setDataStore(dataStore)
         
         if let button = statusBarItem?.button {
             button.image = NSImage(
@@ -36,19 +47,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             button.action = #selector(statusBarButtonClicked(_:))
             button.sendAction(on: [.rightMouseUp,.leftMouseUp])
-            timerPopUpViewModel.setOpenPopoverFunc( {
+            timerViewModel.setOpenPopoverFunc( {
                 self.openPopover(from: button)
             })
             
         }
         
-        timerPopUpViewModel.$timerBreak.sink { [weak self] value in
+        timerViewModel.$timerBreak.sink { [weak self] value in
             self?.statusBarItem?.button?.image = NSImage(
                 systemSymbolName: value == .focus ? "clock" : "cup.and.heat.waves",
                 accessibilityDescription: "Menu Timer")
         }.store(in: &cancellables)
         
-        timerPopUpViewModel.$elapsedTime.sink { [weak self] value in
+        timerViewModel.$elapsedTime.sink { [weak self] value in
             let minutes = Int(value) / 60
             let seconds = Int(value) % 60
             let value = String(format: "%02d:%02d", minutes, seconds)
@@ -56,9 +67,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }.store(in: &cancellables)
         
         let hostingController = NSHostingController(
-            rootView: TimerPopUpView(
-                viewModel: timerPopUpViewModel
-            )
+            rootView: TimerView(
+                viewModel: timerViewModel
+            ).environmentObject(dataStore)
         )
         
         popoverManager.setContentViewController(hostingController)
