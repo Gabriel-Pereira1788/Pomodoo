@@ -36,51 +36,5 @@
             landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "25B30B5A-6BAF-4E3F-A888-1CA405044F1B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pomodoo/Features/Timer/ViewModel/TimerViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4"
-            endingLineNumber = "4"
-            landmarkName = "TimerViewModel"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "25B30B5A-6BAF-4E3F-A888-1CA405044F1B - ed134d4f8040f187"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pomodoo.TimerViewModel.deinit"
-                  moduleName = "Pomodoo.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/gabrielpereira/Documents/Development/Projects/Pomodoo/PomodooApp/Pomodoo/Features/Timer/ViewModel/TimerViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0">
-               </Location>
-               <Location
-                  uuid = "25B30B5A-6BAF-4E3F-A888-1CA405044F1B - 75b5ab6793d33094"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pomodoo.TimerViewModel.__deallocating_deinit"
-                  moduleName = "Pomodoo.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/gabrielpereira/Documents/Development/Projects/Pomodoo/PomodooApp/Pomodoo/Features/Timer/ViewModel/TimerViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

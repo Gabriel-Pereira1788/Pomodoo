@@ -8,13 +8,13 @@ protocol TimerConfigObserver:AnyObject {
 }
 
 protocol TimerConfigNotifierProtocol {
-    static var shared:TimerConfigNotifier { get }
+    static var shared:TimerConfigNotifierProtocol { get }
     func addObserver(_ observer:TimerConfigObserver)
     func changeValue(_ config:TimerConfig)
 }
 
 class TimerConfigNotifier:TimerConfigNotifierProtocol {
-    static var shared = TimerConfigNotifier()
+    static var shared:TimerConfigNotifierProtocol = TimerConfigNotifier()
     
     private var cancellable:AnyCancellable?
     private var dataPublisher = PassthroughSubject<TimerConfig,Never>()

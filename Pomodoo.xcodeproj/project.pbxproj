@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B18ECA32D4599A700CD026C /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B18ECA22D4599A700CD026C /* ServiceManagement.framework */; };
+		9B77BA262DC3F1D700AD63B4 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 9B77BA252DC3F1D700AD63B4 /* ViewInspector */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +48,10 @@
 		9B4C5E6D2D5B5F350034E0E5 /* Exceptions for "Pomodoo" folder in "Pomodoo" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Features/Timer/Tests/TimerViewModelTest.swift,
+				Features/Settings/Tests/SettingsOptionViewModelTest.swift,
+				Features/Settings/Tests/SettingsViewModelTest.swift,
+				Features/Timer/Tests/View/TimerViewTest.swift,
+				Features/Timer/Tests/ViewModel/TimerViewModelTest.swift,
 				Info.plist,
 			);
 			target = 9B33EC372D2DFD4E00439338 /* Pomodoo */;
@@ -62,7 +66,10 @@
 		9BB04C852DBD226C00E6E7E9 /* Exceptions for "Pomodoo" folder in "PomodooTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Features/Timer/Tests/TimerViewModelTest.swift,
+				Features/Settings/Tests/SettingsOptionViewModelTest.swift,
+				Features/Settings/Tests/SettingsViewModelTest.swift,
+				Features/Timer/Tests/View/TimerViewTest.swift,
+				Features/Timer/Tests/ViewModel/TimerViewModelTest.swift,
 			);
 			target = 9BB04C762DBD223C00E6E7E9 /* PomodooTests */;
 		};
@@ -113,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B77BA262DC3F1D700AD63B4 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +223,7 @@
 			);
 			name = PomodooTests;
 			packageProductDependencies = (
+				9B77BA252DC3F1D700AD63B4 /* ViewInspector */,
 			);
 			productName = PomodooTests;
 			productReference = 9BB04C772DBD223C00E6E7E9 /* PomodooTests.xctest */;
@@ -251,6 +260,9 @@
 			);
 			mainGroup = 9B33EC2F2D2DFD4E00439338;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9B77BA242DC3F1C000AD63B4 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9B33EC392D2DFD4E00439338 /* Products */;
 			projectDirPath = "";
@@ -651,6 +663,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9B77BA242DC3F1C000AD63B4 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9B77BA252DC3F1D700AD63B4 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B77BA242DC3F1C000AD63B4 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9B33EC302D2DFD4E00439338 /* Project object */;
 }

@@ -7,11 +7,11 @@ protocol NotificationServiceProtocol {
     func requestNotificationPermissions()
     func checkNotificationPermission()
     func scheduleNotification(title: String, body: String, timeInterval: TimeInterval)
-    static var shared: NotificationService { get }
+//    static var shared: NotificationServiceProtocol { get }
 }
 
 class NotificationService:NotificationServiceProtocol {
-    static var shared = NotificationService()
+    static var shared:NotificationServiceProtocol = NotificationService()
     private var permissionGranted = false
 
     private init() {

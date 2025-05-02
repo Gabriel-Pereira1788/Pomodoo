@@ -5,8 +5,10 @@ struct ButtonAction: View {
     var iconSystemName: String
     var iconSize: CGFloat = 40
     var backgroundColor: Color = Color(.darkGray).opacity(0.1)
+    var accessibilityID:String? = ""
     var action: () -> Void
-
+    
+    
     var body: some View {
         Button(
             action: action,
@@ -33,6 +35,7 @@ struct ButtonAction: View {
 
             }
         ).buttonStyle(.plain)
+        .accessibilityIdentifier(accessibilityID ?? "")
 
     }
 }

@@ -10,11 +10,15 @@ struct TimerView: View {
         ZStack {
             VStack(spacing: 15) {
                 HStack {
-                    ButtonAction(iconSystemName:"arrow.trianglehead.clockwise"){
+                    ButtonAction(
+                        iconSystemName:"arrow.trianglehead.clockwise",
+                        accessibilityID: "reset_button"
+                    ){
                         viewModel.onReset()
                     }
+                    
                     Spacer()
-                    ButtonAction(iconSystemName: "gear") {
+                    ButtonAction(iconSystemName: "gear",accessibilityID: "settings_button") {
                         openSettings()
                     }
                 }
@@ -33,23 +37,22 @@ struct TimerView: View {
                 HStack {
                     Spacer()
                     HStack(spacing: 10) {
-                        ButtonAction(iconSystemName: "chevron.left", iconSize: 30) {
+                        ButtonAction(iconSystemName: "chevron.left", iconSize: 30,accessibilityID: "prev_button") {
                             viewModel.prevPhase()
                         }
                         ButtonAction(
                             iconSystemName: viewModel.uiState == .paused ? "play" : "pause",
                             iconSize: 50,
-                            backgroundColor: dataStore.primaryColor
+                            backgroundColor: dataStore.primaryColor,
+                            accessibilityID: "play_button"
                         ) {
                             viewModel.uiState == .paused ? viewModel.start() : viewModel.pause()
                         }
-                        ButtonAction(iconSystemName: "chevron.right", iconSize: 30) {
+                        ButtonAction(iconSystemName: "chevron.right", iconSize: 30,accessibilityID: "next_button") {
                             viewModel.nextPhase()
                         }
                     }
-                    
                     Spacer()
-                    
                 }
                 
             }
@@ -79,7 +82,8 @@ extension TimerView {
                 .foregroundStyle(Color(.darkGray))
                 .font(.caption2)
                 .padding(.top, 10)
-        }
+
+        }.accessibilityIdentifier("timer_content_container")
     }
     
     func renderSessionsCount() -> some View {
@@ -91,8 +95,9 @@ extension TimerView {
                         ? dataStore.primaryColor : Color(.darkGray)
                     )
                     .cornerRadius(10)
+                    .id("count_session_element_\(index)")
             }
-        }
+        }.accessibilityIdentifier("count_session_container")
     }
 }
 
@@ -100,7 +105,9 @@ extension TimerView {
     TimerView(
         viewModel: TimerViewModel(
             timerConfigNotifier: TimerConfigNotifier.shared,
-            notificationService: NotificationService.shared
+            notificationService: NotificationService.shared,
+            timerHandler: TimerHandler()
+            
         )
     )
     

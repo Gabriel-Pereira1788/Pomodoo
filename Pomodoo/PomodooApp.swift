@@ -30,7 +30,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     )
     @ObservedObject var timerViewModel = TimerViewModel(
         timerConfigNotifier: TimerConfigNotifier.shared,
-        notificationService: NotificationService.shared
+        notificationService: NotificationService.shared,
+        timerHandler: TimerHandler()
+        
     )
     
     func applicationDidFinishLaunching(_ notification: Notification) {

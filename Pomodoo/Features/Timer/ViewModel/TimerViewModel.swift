@@ -10,7 +10,7 @@ class TimerViewModel: ObservableObject {
     private var notificationService:NotificationServiceProtocol
     private var timerConfigNotifier:TimerConfigNotifierProtocol
     private var dataStore:DataStore!
-    private var timer: Timer?
+    private var timer: TimerHandlerProtocol
     private var initialTime: Double = 0.0
     private var openPopover: () -> Void = {}
     
@@ -29,11 +29,13 @@ class TimerViewModel: ObservableObject {
         return value
     }
     
-    init(timerConfigNotifier:TimerConfigNotifierProtocol,notificationService:NotificationServiceProtocol) {
+    init(timerConfigNotifier:TimerConfigNotifierProtocol,notificationService:NotificationServiceProtocol,timerHandler:TimerHandlerProtocol) {
         self.timerConfigNotifier = timerConfigNotifier
         self.notificationService = notificationService
+        self.timer = timerHandler
+        
         self.timerConfigNotifier.addObserver(self)
-        NotificationService.shared.checkNotificationPermission()
+        notificationService.checkNotificationPermission()
     }
     
     private func bundleInitializeIntervals() {
@@ -63,7 +65,7 @@ class TimerViewModel: ObservableObject {
         }
         
         uiState = .running
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer.schedule(timeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.elapsedTime -= 1
             
             if self?.elapsedTime == 0 {
@@ -74,8 +76,7 @@ class TimerViewModel: ObservableObject {
     
     func pause() {
         uiState = .paused
-        timer?.invalidate()
-        timer = nil
+        timer.invalidate()
     }
 }
 
@@ -133,6 +134,7 @@ extension TimerViewModel {
         resetTimer()
         uiState = .paused
         openPopover()
+        
         if countSession >= dataStore.sessionsLimitValue {
             countSession = 0
             handleCycleTransition(from: .long)
@@ -140,11 +142,10 @@ extension TimerViewModel {
         }
         
         if timerBreak == .short || timerBreak == .long {
-            
             handleCycleTransition(from: .focus)
-            
         } else {
             countSession += 1
+            
             handleCycleTransition(from: .short)
         }
         
@@ -159,13 +160,12 @@ extension TimerViewModel {
     }
     
     private func scheduleNotification(notificationContent: TimerNotificationContent) {
-        NotificationService.shared.scheduleNotification(
+        notificationService.scheduleNotification(
             title: notificationContent.title, body: notificationContent.body, timeInterval: 0.1)
     }
     
     private func resetTimer() {
-        timer?.invalidate()
-        timer = nil
+        timer.invalidate()
     }
     
     private func changeTimerBreakElapsed(_ breakType: TimerBreak) {
