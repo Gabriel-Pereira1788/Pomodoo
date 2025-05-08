@@ -1,107 +1,112 @@
-import Testing
 import Foundation
+import Testing
+
 @testable import Pomodoo
 
 class TimerViewModelTest {
     private var viewModel: TimerViewModel!
     private var timerHandlerMock: MockTimeHandler!
-    private var notificationServiceMock:MockNotificationService!
+    private var notificationServiceMock: MockNotificationService!
     init() {
         timerHandlerMock = MockTimeHandler()
         notificationServiceMock = MockNotificationService()
-        viewModel = TimerViewModel(timerConfigNotifier:MockTimerConfigNotifier.shared,
-                                   notificationService:notificationServiceMock,
-                                   timerHandler: timerHandlerMock
+        viewModel = TimerViewModel(
+            notificationService: notificationServiceMock,
+            pomodoroEngine: PomodoroEngine(
+                timerHandler: timerHandlerMock,
+                timerConfigNotifier: MockTimerConfigNotifier.shared
+            )
 
         )
-        viewModel.setDataStore(DataStore(
-            timerConfigNotifier: MockTimerConfigNotifier.shared
-        ))
-        
+        viewModel.setDataStore(
+            DataStore(
+                timerConfigNotifier: MockTimerConfigNotifier.shared
+            ))
+
     }
-    
+
     @Test func testTimerTrigger_WhenPauseActionRun() {
         viewModel.pause()
         #expect(viewModel.uiState == .paused)
     }
-    
-    @Test func testTimerTrigger_WhenDecreaseEleapsedTime() async throws {
+
+    @Test func testTimerTrigger_WhenDecreaseEleapsedTime() {
         viewModel.start()
-        
-        let initialElapsedTime = viewModel.elapsedTime
+
+        let initialElapsedTime = viewModel.pomodoroEngine.elapsedTime
         timerHandlerMock.trigger()
-        
+
         #expect(viewModel.uiState == .running)
-        #expect(viewModel.elapsedTime < initialElapsedTime)
+        #expect(viewModel.pomodoroEngine.elapsedTime < initialElapsedTime)
     }
-    
+
     @Test func testTimerTrigger_WhenDispatchNotification() {
         viewModel.start()
-        viewModel.elapsedTime = 1
-        
+        viewModel.pomodoroEngine.elapsedTime = 1
+
         timerHandlerMock.trigger()
         let notificationData = TimerNotificationData.getNotificationContent(for: .short)
         let scheduleNotificationContent = notificationServiceMock.getScheduleNotificationContent()
-        
+
         #expect(notificationData.body == scheduleNotificationContent?.body)
         #expect(notificationData.title == scheduleNotificationContent?.title)
     }
-    
+
     @Test func testTimerTrigger_WhenChangeToShortBreakPhase() {
         viewModel.start()
-        viewModel.elapsedTime = 1
-        
+        viewModel.pomodoroEngine.elapsedTime = 1
+
         timerHandlerMock.trigger()
-        
-        #expect(viewModel.timerBreak == .short)
+
+        #expect(viewModel.pomodoroEngine.phase == .short)
     }
-    
+
     @Test func testTimerTrigger_WhenChangeToFocusPhase() {
         viewModel.start()
-        viewModel.elapsedTime = 1
-        viewModel.timerBreak = .short
-        
+        viewModel.pomodoroEngine.elapsedTime = 1
+        viewModel.pomodoroEngine.phase = .short
+
         timerHandlerMock.trigger()
-        
-        #expect(viewModel.timerBreak == .focus)
+
+        #expect(viewModel.pomodoroEngine.phase == .focus)
     }
-    
+
     @Test func testTimerTrigger_WhenChangeToLongBreakPhase() {
         viewModel.start()
-        viewModel.elapsedTime = 1
-        viewModel.timerBreak = .short
-        viewModel.countSession = 5
-        
+        viewModel.pomodoroEngine.elapsedTime = 1
+        viewModel.pomodoroEngine.phase = .short
+        viewModel.pomodoroEngine.countSession = 5
+
         timerHandlerMock.trigger()
-        
-        #expect(viewModel.timerBreak == .long)
-        #expect(viewModel.countSession == 0)
+
+        #expect(viewModel.pomodoroEngine.phase == .long)
+        #expect(viewModel.pomodoroEngine.countSession == 0)
     }
-    
+
     @Test func testTimerTrigger_WhenResetTimer() {
         viewModel.onReset()
-        
-        #expect(viewModel.countSession == 0)
+
+        #expect(viewModel.pomodoroEngine.countSession == 0)
         #expect(viewModel.uiState == .paused)
-        #expect(viewModel.timerBreak == .focus)
+        #expect(viewModel.pomodoroEngine.phase == .focus)
     }
-    
+
     @Test func testTimerTrigger_WhenPrevActionRunToFocusPhase() {
-        viewModel.countSession = 2
-        viewModel.timerBreak = .short
-        
+        viewModel.pomodoroEngine.countSession = 2
+        viewModel.pomodoroEngine.phase = .short
+
         viewModel.prevPhase()
-        
-        #expect(viewModel.countSession == 1)
-        #expect(viewModel.timerBreak == .focus)
+
+        #expect(viewModel.pomodoroEngine.countSession == 1)
+        #expect(viewModel.pomodoroEngine.phase == .focus)
     }
-    
+
     @Test func testTimerTrigger_WhenPrevActionRunToShortBreakPhase() {
-        viewModel.countSession = 1
-        viewModel.timerBreak = .focus
-        
+        viewModel.pomodoroEngine.countSession = 1
+        viewModel.pomodoroEngine.phase = .focus
+
         viewModel.prevPhase()
-        
-        #expect(viewModel.timerBreak == .short)
+
+        #expect(viewModel.pomodoroEngine.phase == .short)
     }
 }

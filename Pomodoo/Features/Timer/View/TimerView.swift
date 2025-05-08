@@ -3,6 +3,7 @@ import SwiftUI
 struct TimerView: View {
     
     @ObservedObject var viewModel: TimerViewModel
+    
     @EnvironmentObject var dataStore:DataStore
     @Environment(\.openSettings) private var openSettings
     
@@ -69,7 +70,7 @@ extension TimerView {
     
     func renderTimer() -> some View {
         VStack(alignment: .center, spacing: 6) {
-            Image(systemName: viewModel.timerBreak == .focus ? "eye" : "cup.and.heat.waves")
+            Image(systemName: viewModel.pomodoroEngine.phase == .focus ? "eye" : "cup.and.heat.waves")
                 .font(.system(size: 20))
             
             Text(viewModel.timeString)
@@ -78,7 +79,7 @@ extension TimerView {
             
             renderSessionsCount()
             
-            Text(viewModel.timerBreak.description)
+            Text(viewModel.pomodoroEngine.phase.description)
                 .foregroundStyle(Color(.darkGray))
                 .font(.caption2)
                 .padding(.top, 10)
@@ -91,7 +92,7 @@ extension TimerView {
             ForEach(0..<dataStore.sessionsLimitValue, id: \.self) { index in
                 Rectangle().frame(width: 3, height: 7)
                     .foregroundColor(
-                        viewModel.countSession > index
+                        viewModel.pomodoroEngine.countSession > index
                         ? dataStore.primaryColor : Color(.darkGray)
                     )
                     .cornerRadius(10)
@@ -104,9 +105,11 @@ extension TimerView {
 #Preview {
     TimerView(
         viewModel: TimerViewModel(
-            timerConfigNotifier: TimerConfigNotifier.shared,
             notificationService: NotificationService.shared,
-            timerHandler: TimerHandler()
+            pomodoroEngine: PomodoroEngine(
+                timerHandler: TimerHandler(),
+                timerConfigNotifier: TimerConfigNotifier.shared
+            )
             
         )
     )

@@ -38,7 +38,6 @@
 		9B18ECA22D4599A700CD026C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		9B18ECAE2D459A2700CD026C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9B33EC382D2DFD4E00439338 /* Pomodoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B5427182DBAE97F00E85EAD /* PomodooiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodooiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB04C772DBD223C00E6E7E9 /* PomodooTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PomodooTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB813A72D343B6300F55000 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		9BB813A92D343B6300F55000 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -55,13 +54,6 @@
 				Info.plist,
 			);
 			target = 9B33EC372D2DFD4E00439338 /* Pomodoo */;
-		};
-		9B5427332DBAEAD600E85EAD /* Exceptions for "Shared" folder in "PomodooiOS" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				SampleView.swift,
-			);
-			target = 9B5427172DBAE97F00E85EAD /* PomodooiOS */;
 		};
 		9BB04C852DBD226C00E6E7E9 /* Exceptions for "Pomodoo" folder in "PomodooTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -85,14 +77,6 @@
 			path = Pomodoo;
 			sourceTree = "<group>";
 		};
-		9B54272C2DBAEAB500E85EAD /* Shared */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				9B5427332DBAEAD600E85EAD /* Exceptions for "Shared" folder in "PomodooiOS" target */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		9BB04C782DBD223C00E6E7E9 /* PomodooTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PomodooTests;
@@ -106,13 +90,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B18ECA32D4599A700CD026C /* ServiceManagement.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9B5427152DBAE97F00E85EAD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +107,6 @@
 		9B33EC2F2D2DFD4E00439338 = {
 			isa = PBXGroup;
 			children = (
-				9B54272C2DBAEAB500E85EAD /* Shared */,
 				9B33EC3A2D2DFD4E00439338 /* Pomodoo */,
 				9BB04C782DBD223C00E6E7E9 /* PomodooTests */,
 				9BB813A62D343B6300F55000 /* Frameworks */,
@@ -142,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				9B33EC382D2DFD4E00439338 /* Pomodoo.app */,
-				9B5427182DBAE97F00E85EAD /* PomodooiOS.app */,
 				9BB04C772DBD223C00E6E7E9 /* PomodooTests.xctest */,
 			);
 			name = Products;
@@ -177,32 +152,12 @@
 			);
 			fileSystemSynchronizedGroups = (
 				9B33EC3A2D2DFD4E00439338 /* Pomodoo */,
-				9B54272C2DBAEAB500E85EAD /* Shared */,
 			);
 			name = Pomodoo;
 			packageProductDependencies = (
 			);
 			productName = Focusee;
 			productReference = 9B33EC382D2DFD4E00439338 /* Pomodoo.app */;
-			productType = "com.apple.product-type.application";
-		};
-		9B5427172DBAE97F00E85EAD /* PomodooiOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9B5427232DBAE98000E85EAD /* Build configuration list for PBXNativeTarget "PomodooiOS" */;
-			buildPhases = (
-				9B5427142DBAE97F00E85EAD /* Sources */,
-				9B5427152DBAE97F00E85EAD /* Frameworks */,
-				9B5427162DBAE97F00E85EAD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PomodooiOS;
-			packageProductDependencies = (
-			);
-			productName = PomodooiOS;
-			productReference = 9B5427182DBAE97F00E85EAD /* PomodooiOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9BB04C762DBD223C00E6E7E9 /* PomodooTests */ = {
@@ -242,9 +197,6 @@
 					9B33EC372D2DFD4E00439338 = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					9B5427172DBAE97F00E85EAD = {
-						CreatedOnToolsVersion = 16.2;
-					};
 					9BB04C762DBD223C00E6E7E9 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 9B33EC372D2DFD4E00439338;
@@ -269,7 +221,6 @@
 			projectRoot = "";
 			targets = (
 				9B33EC372D2DFD4E00439338 /* Pomodoo */,
-				9B5427172DBAE97F00E85EAD /* PomodooiOS */,
 				9BB04C762DBD223C00E6E7E9 /* PomodooTests */,
 			);
 		};
@@ -277,13 +228,6 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		9B33EC362D2DFD4E00439338 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9B5427162DBAE97F00E85EAD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -301,13 +245,6 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		9B33EC342D2DFD4E00439338 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9B5427142DBAE97F00E85EAD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -514,69 +451,6 @@
 			};
 			name = Release;
 		};
-		9B5427242DBAE98000E85EAD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PomodooiOS/Preview Content\"";
-				DEVELOPMENT_TEAM = X6ZWT96PYP;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gabslab.PomodooiOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		9B5427252DBAE98000E85EAD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PomodooiOS/Preview Content\"";
-				DEVELOPMENT_TEAM = X6ZWT96PYP;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = gabslab.PomodooiOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		9BB04C7E2DBD223C00E6E7E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -640,15 +514,6 @@
 			buildConfigurations = (
 				9B33EC4D2D2DFD4F00439338 /* Debug */,
 				9B33EC4E2D2DFD4F00439338 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9B5427232DBAE98000E85EAD /* Build configuration list for PBXNativeTarget "PomodooiOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9B5427242DBAE98000E85EAD /* Debug */,
-				9B5427252DBAE98000E85EAD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -29,11 +29,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         timerConfigNotifier: TimerConfigNotifier.shared
     )
     @ObservedObject var timerViewModel = TimerViewModel(
-        timerConfigNotifier: TimerConfigNotifier.shared,
         notificationService: NotificationService.shared,
-        timerHandler: TimerHandler()
-        
+        pomodoroEngine: PomodoroEngine(
+            timerHandler: TimerHandler(),
+            timerConfigNotifier: TimerConfigNotifier.shared
+        )
     )
+        
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
@@ -55,13 +57,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
         }
         
-        timerViewModel.$timerBreak.sink { [weak self] value in
+        timerViewModel.pomodoroEngine.$phase.sink { [weak self] value in
             self?.statusBarItem?.button?.image = NSImage(
                 systemSymbolName: value == .focus ? "clock" : "cup.and.heat.waves",
                 accessibilityDescription: "Menu Timer")
         }.store(in: &cancellables)
         
-        timerViewModel.$elapsedTime.sink { [weak self] value in
+        timerViewModel.pomodoroEngine.$elapsedTime.sink { [weak self] value in
             let minutes = Int(value) / 60
             let seconds = Int(value) % 60
             let value = String(format: "%02d:%02d", minutes, seconds)
